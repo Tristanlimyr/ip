@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class Wout {
     public static Scanner userInputScanner = new Scanner(System.in);
@@ -19,6 +21,11 @@ public class Wout {
     public static String exitMessage = "Bye. Hope to see you again soon!\n";
     public static String invalidCommandMessage = "Please enter a valid command\n";
 
+    // Regex
+    public final static String DEADLINE_REGEX = "^(?!.*\\/by.*\\/by)(.+?)\\s+\\/by\\s+(.+)$";
+    public final static String EVENT_REGEX = "^(?!.*\\/from.*\\/from)(?!.*\\/to.*\\/to)(.+?)\\s+\\/from\\s+(.+?)\\s+\\/to\\s+(.+)$";
+
+
     public static void printMessage(String message) {
         System.out.println("________________________________\n"
                 + message
@@ -33,53 +40,53 @@ public class Wout {
         printMessage(addedTaskMessage);
     }
 
-    private static void doMarkTaskCommand(String input) {
+    private static void doMarkTaskCommand(String input) throws WoutException {
         try {
             int index = Integer.parseInt(input);
             Wout.printMessage(userTaskStore.markTaskAt(index));
         } catch (NumberFormatException e) {
-            Wout.printMessage(input + " is not a valid index!\n");
+            throw new WoutException(input + " is not a valid index for marking!\n");
         }
     }
 
-    private static void doUnmarkTaskCommand(String input) {
+    private static void doUnmarkTaskCommand(String input) throws WoutException {
         try {
             int index = Integer.parseInt(input);
             Wout.printMessage(userTaskStore.unmarkTaskAt(index));
         } catch (NumberFormatException e) {
-            Wout.printMessage(input + " is not a valid index!\n");
+            throw new WoutException(input + " is not a valid index for unmarking!\n");
         }
     }
 
-    private static void doAddTodoCommand(String input) {
-        try {
+    private static void doAddTodoCommand(String input) throws WoutException {
+        if (input.isEmpty()) {
+            throw new WoutException("Please provide a description for Todo tasks\n");
+        } else {
             Task todo = new Todo(input);
             userTaskStore.storeTask(todo);
             printAddedTaskMessage(todo);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            printMessage("Please provide a valid input for Todo tasks");
         }
     }
 
-    private static void doAddDeadlineCommand(String input) {
-        try {
-            String[] inputArr = input.split("/by ");
-            Task deadline = new Deadline(inputArr[0], inputArr[1]);
+    private static void doAddDeadlineCommand(String input) throws WoutException {
+        Matcher matcher = Pattern.compile(DEADLINE_REGEX).matcher(input);
+        if (!matcher.matches()) {
+            throw new WoutException("Please provide a valid input for Deadline tasks\n");
+        } else {
+            Task deadline = new Deadline(matcher.group(1), matcher.group(2));
             userTaskStore.storeTask(deadline);
             printAddedTaskMessage(deadline);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            printMessage("Please provide a valid input for Deadline tasks");
         }
     }
 
-    private static void doAddEventCommand(String input) {
-        try {
-            String[] inputArr = input.split("/from | /to ");
-            Task event = new Event(inputArr[0], inputArr[1], inputArr[2]);
+    private static void doAddEventCommand(String input) throws WoutException {
+        Matcher matcher = Pattern.compile(EVENT_REGEX).matcher(input);
+        if (!matcher.matches()) {
+            throw new WoutException("Please provide a valid input for Event tasks\n");
+        } else {
+            Task event = new Event(matcher.group(1), matcher.group(2), matcher.group(3));
             userTaskStore.storeTask(event);
             printAddedTaskMessage(event);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            printMessage("Please provide a valid input for Event tasks");
         }
     }
 
@@ -90,44 +97,42 @@ public class Wout {
         while (!exit) {
             // Read user input
             String input = Wout.userInputScanner.nextLine();
-            String[] inputArr = input.split(" ", 2);
-            if (inputArr.length == 0) {
-                Wout.printMessage(invalidCommandMessage);
-            } else {
-                String command = inputArr[0];
-
-                // Carry out user command
-                try {
-                    switch (command) {
-                        case EXIT_COMMAND:
-                            exit = true;
-                            break;
-                        case LIST_COMMAND:
-                            Wout.printMessage(userTaskStore.listTasks());
-                            break;
-                        case MARK_TASK_COMMAND:
-                            doMarkTaskCommand(inputArr[1]);
-                            break;
-                        case UNMARK_TASK_COMMAND:
-                            doUnmarkTaskCommand(inputArr[1]);
-                            break;
-                        case ADD_TODO_COMMAND:
-                            doAddTodoCommand(inputArr[1]);
-                            break;
-                        case ADD_DEADLINE_COMMAND:
-                            doAddDeadlineCommand(inputArr[1]);
-                            break;
-                        case ADD_EVENT_COMMAND:
-                            doAddEventCommand(inputArr[1]);
-                            break;
-                        default:
-                            Wout.printMessage(invalidCommandMessage);
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    printMessage("Please provide a valid input for " + command + "command");
+            String[] inputArr = input.split("\\s+", 2);
+            String command = inputArr[0];
+            // Carry out user command
+            try {
+                switch (command) {
+                    case EXIT_COMMAND:
+                        exit = true;
+                        break;
+                    case LIST_COMMAND:
+                        Wout.printMessage(userTaskStore.listTasks());
+                        break;
+                    case MARK_TASK_COMMAND:
+                        doMarkTaskCommand(inputArr[1]);
+                        break;
+                    case UNMARK_TASK_COMMAND:
+                        doUnmarkTaskCommand(inputArr[1]);
+                        break;
+                    case ADD_TODO_COMMAND:
+                        doAddTodoCommand(inputArr[1]);
+                        break;
+                    case ADD_DEADLINE_COMMAND:
+                        doAddDeadlineCommand(inputArr[1]);
+                        break;
+                    case ADD_EVENT_COMMAND:
+                        doAddEventCommand(inputArr[1]);
+                        break;
+                    default:
+                        throw new WoutException(invalidCommandMessage);
                 }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                printMessage("Please provide input for " + command + " command!\n");
+            } catch (WoutException e) {
+                printMessage(e.toString());
             }
         }
+
         Wout.printMessage(exitMessage);
     }
 }
