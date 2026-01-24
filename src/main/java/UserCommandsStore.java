@@ -4,21 +4,26 @@ import java.util.List;
 public class UserCommandsStore {
 
     private List<String> listOfCommands;
-    
+
     public UserCommandsStore() {
         this.listOfCommands = new ArrayList<String>();
     }
 
-    public void addCommand(String command) {
+    public void storeCommand(String command) {
         listOfCommands.add(command);
     }
 
     public String listCommands() {
         String commands = "";
-        for (String command : listOfCommands) {
-            commands += command + "\n";
+        int index = 1;
+        if (listOfCommands.isEmpty()) {
+            return "list is currently empty!";
+        } else {
+            for (String command : listOfCommands) {
+                commands += index + ". " + command + "\n";
+                index++;
+            }
+            return commands;
         }
-        return commands;
     }
-
 }
