@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserCommandsStore {
+public class UserTaskStore {
 
-    private List<String> listOfCommands;
+    private List<Task> listOfCommands;
 
-    public UserCommandsStore() {
-        this.listOfCommands = new ArrayList<String>();
+    public UserTaskStore() {
+        this.listOfCommands = new ArrayList<Task>();
     }
 
-    public void storeCommand(String command) {
+    public void storeTask(Task command) {
         listOfCommands.add(command);
     }
 
