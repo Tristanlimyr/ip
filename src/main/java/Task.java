@@ -16,6 +16,10 @@ public class Task {
         isDone = true;
     }
 
+    public void unmarkAsDone() {
+        isDone = false;
+    }
+
     @Override
     public String toString() {
         return description;
