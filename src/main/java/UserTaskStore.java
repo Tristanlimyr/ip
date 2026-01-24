@@ -13,16 +13,12 @@ public class UserTaskStore {
         listOfTasks.add(task);
     }
 
-    private String taskToString(Task task) {
-        return "[" + task.getStatusIcon() + "] " + task;
-    }
-
     public String markTaskAt(int index) {
         try {
             Task task = listOfTasks.get(index - 1);
             task.markAsDone();
             return "Nice! I've marked this task as done:\n"
-                    + "  " + taskToString(task) + "\n";
+                    + "  " + task + "\n";
         } catch (IndexOutOfBoundsException e) {
             return "Index " + index + " is not valid!\n";
         }
@@ -33,7 +29,7 @@ public class UserTaskStore {
             Task task = listOfTasks.get(index - 1);
             task.unmarkAsDone();
             return "Ok, I've marked this task as not done yet:\n"
-                    + "  " + taskToString(task) + "\n";
+                    + "  " + task + "\n";
         } catch (IndexOutOfBoundsException e) {
             return "Index " + index + " is not valid!\n";
         }
@@ -46,7 +42,7 @@ public class UserTaskStore {
             return "list is currently empty!\n";
         } else {
             for (Task task : listOfTasks) {
-                tasks += index + ". " + taskToString(task) + "\n";
+                tasks += index + ". " + task + "\n";
                 index++;
             }
             return tasks;
