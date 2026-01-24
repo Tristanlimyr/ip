@@ -13,6 +13,10 @@ public class UserTaskStore {
         listOfTasks.add(task);
     }
 
+    public int getNumOfTasks() {
+        return listOfTasks.size();
+    }
+
     public String markTaskAt(int index) {
         try {
             Task task = listOfTasks.get(index - 1);
