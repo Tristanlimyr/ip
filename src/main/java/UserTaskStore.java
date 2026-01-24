@@ -17,26 +17,21 @@ public class UserTaskStore {
         return listOfTasks.size();
     }
 
-    public String markTaskAt(int index) {
-        try {
-            Task task = listOfTasks.get(index - 1);
-            task.markAsDone();
-            return "Nice! I've marked this task as done:\n"
-                    + "  " + task + "\n";
-        } catch (IndexOutOfBoundsException e) {
-            return "Index " + index + " is not valid!\n";
-        }
+    public Task markTaskAt(int index) {
+        Task task = listOfTasks.get(index - 1);
+        task.markAsDone();
+        return task;
     }
 
-    public String unmarkTaskAt(int index) {
-        try {
-            Task task = listOfTasks.get(index - 1);
-            task.unmarkAsDone();
-            return "Ok, I've marked this task as not done yet:\n"
-                    + "  " + task + "\n";
-        } catch (IndexOutOfBoundsException e) {
-            return "Index " + index + " is not valid!\n";
-        }
+    public Task unmarkTaskAt(int index) {
+        Task task = listOfTasks.get(index - 1);
+        task.unmarkAsDone();
+        return task;
+    }
+
+    public Task deleteTaskAt(int index) {
+        Task task = listOfTasks.remove(index - 1);
+        return task;
     }
 
     public String listTasks() {

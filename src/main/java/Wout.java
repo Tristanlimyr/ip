@@ -14,6 +14,7 @@ public class Wout {
     public final static String ADD_TODO_COMMAND = "todo";
     public final static String ADD_DEADLINE_COMMAND = "deadline";
     public final static String ADD_EVENT_COMMAND = "event";
+    public final static String DELETE_COMMAND = "delete";
 
     // default messages
     public static String greetingMessage = "Hello! I'm Wout!\n"
@@ -43,18 +44,28 @@ public class Wout {
     private static void doMarkTaskCommand(String input) throws WoutException {
         try {
             int index = Integer.parseInt(input);
-            Wout.printMessage(userTaskStore.markTaskAt(index));
+            Task task = userTaskStore.markTaskAt(index);
+            printMessage("Nice! I've marked this task as done:\n"
+                    + "  " + task + "\n"
+                    + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n");
         } catch (NumberFormatException e) {
-            throw new WoutException(input + " is not a valid index for marking!\n");
+            throw new WoutException(input + " is not a number!\n");
+        } catch (IndexOutOfBoundsException e) {
+            throw new WoutException("Index " + input + " is not a valid range for marking\n");
         }
     }
 
     private static void doUnmarkTaskCommand(String input) throws WoutException {
         try {
             int index = Integer.parseInt(input);
-            Wout.printMessage(userTaskStore.unmarkTaskAt(index));
+            Task task = userTaskStore.unmarkTaskAt(index);
+            printMessage("Ok, I've marked this task as not done yet:\n"
+                    + "  " + task + "\n"
+                    + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n");
         } catch (NumberFormatException e) {
-            throw new WoutException(input + " is not a valid index for unmarking!\n");
+            throw new WoutException(input + " is not a number!\n");
+        } catch (IndexOutOfBoundsException e) {
+            throw new WoutException("Index " + input + " is not a valid range for unmarking\n");
         }
     }
 
@@ -90,6 +101,20 @@ public class Wout {
         }
     }
 
+    private static void doDeleteCommand(String input) throws WoutException {
+        try {
+            int index = Integer.parseInt(input);
+            Task task = userTaskStore.deleteTaskAt(index);
+            printMessage("Noted. I've remove this task:\n"
+                    + "  " + task + "\n"
+                    + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n");
+        } catch (NumberFormatException e) {
+            throw new WoutException(input + " is not number!\n");
+        } catch (IndexOutOfBoundsException e) {
+            throw new WoutException("Index " + input + " is not a valid range for deleting\n");
+        }
+    }
+
     public static void main(String[] args) {
         Wout.printMessage(greetingMessage);
 
@@ -122,6 +147,9 @@ public class Wout {
                         break;
                     case ADD_EVENT_COMMAND:
                         doAddEventCommand(inputArr[1]);
+                        break;
+                    case DELETE_COMMAND:
+                        doDeleteCommand(inputArr[1]);
                         break;
                     default:
                         throw new WoutException(invalidCommandMessage);
