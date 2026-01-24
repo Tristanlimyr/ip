@@ -3,27 +3,53 @@ import java.util.List;
 
 public class UserTaskStore {
 
-    private List<Task> listOfCommands;
+    private List<Task> listOfTasks;
 
     public UserTaskStore() {
-        this.listOfCommands = new ArrayList<Task>();
+        this.listOfTasks = new ArrayList<Task>();
     }
 
-    public void storeTask(Task command) {
-        listOfCommands.add(command);
+    public void storeTask(Task task) {
+        listOfTasks.add(task);
     }
 
-    public String listCommands() {
-        String commands = "";
+    private String taskToString(Task task) {
+        return "[" + task.getStatusIcon() + "] " + task;
+    }
+
+    public String markTaskAt(int index) {
+        try {
+            Task task = listOfTasks.get(index - 1);
+            task.markAsDone();
+            return "Nice! I've marked this task as done:\n"
+                    + "  " + taskToString(task);
+        } catch (IndexOutOfBoundsException e) {
+            return "Index " + index + " is not valid!\n";
+        }
+    }
+
+    public String unmarkTaskAt(int index) {
+        try {
+            Task task = listOfTasks.get(index - 1);
+            task.unmarkAsDone();
+            return "Ok, I've marked this task as not done yet:\n"
+                    + "  " + taskToString(task);
+        } catch (IndexOutOfBoundsException e) {
+            return "Index " + index + " is not valid!\n";
+        }
+    }
+
+    public String listTasks() {
+        String tasks = "";
         int index = 1;
-        if (listOfCommands.isEmpty()) {
+        if (listOfTasks.isEmpty()) {
             return "list is currently empty!";
         } else {
-            for (String command : listOfCommands) {
-                commands += index + ". " + command + "\n";
+            for (Task task : listOfTasks) {
+                tasks += index + ". " + taskToString(task) + "\n";
                 index++;
             }
-            return commands;
+            return tasks;
         }
     }
 }
