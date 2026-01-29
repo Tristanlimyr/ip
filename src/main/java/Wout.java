@@ -5,25 +5,9 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class Wout {
-    private static Scanner userInputScanner = new Scanner(System.in);
-    private static UserTaskStore userTaskStore = new UserTaskStore();
-    private final static String FILE_PATH = "./data/wout.txt";
-
-    // user commands
-    public final static String EXIT_COMMAND = "bye";
-    public final static String LIST_COMMAND = "list";
-    public final static String MARK_TASK_COMMAND = "mark";
-    public final static String UNMARK_TASK_COMMAND = "unmark";
-    public final static String ADD_TODO_COMMAND = "todo";
-    public final static String ADD_DEADLINE_COMMAND = "deadline";
-    public final static String ADD_EVENT_COMMAND = "event";
-    public final static String DELETE_COMMAND = "delete";
-
-    // default messages
-    public static String greetingMessage = "Hello! I'm Wout!\n"
-            + "What can I do for you?\n";
-    public static String exitMessage = "Bye. Hope to see you again soon!\n";
-    public static String invalidCommandMessage = "Please enter a valid command\n";
+    private static final Scanner userInputScanner = new Scanner(System.in);
+    private static final UserTaskStore userTaskStore = new UserTaskStore();
+    private static final String FILE_PATH = "./data/wout.txt";
 
     // Regex
     public final static String DEADLINE_REGEX =
@@ -151,11 +135,11 @@ public class Wout {
                 String[] inputArr = input.split("\\s+#\\s+");
                 boolean isDone = parseTaskDoneStatus(inputArr[0]);
                 inputArr = inputArr[1].split("\\s+", 2);
-                String command = inputArr[0];
+                UserCommand command = UserCommand.fromString(inputArr[0]);
                 switch (command) {
-                    case ADD_TODO_COMMAND -> doAddTodoCommand(inputArr[1], isDone);
-                    case ADD_DEADLINE_COMMAND ->  doAddDeadlineCommand(inputArr[1], isDone);
-                    case ADD_EVENT_COMMAND -> doAddEventCommand(inputArr[1], isDone);
+                    case EXIT -> doAddTodoCommand(inputArr[1], isDone);
+                    case DEADLINE ->  doAddDeadlineCommand(inputArr[1], isDone);
+                    case EVENT -> doAddEventCommand(inputArr[1], isDone);
                     default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!\n");
                 }
             }
@@ -167,35 +151,33 @@ public class Wout {
     }
 
     public static void main(String[] args) {
-        Wout.loadTaskList();
-        Wout.printMessage(greetingMessage);
+        loadTaskList();
+        printMessage(UserMessages.GREET);
 
         boolean exit = false;
         String msg;
+        UserCommand command;
         while (!exit) {
-            // Read user input
             String input = Wout.userInputScanner.nextLine();
             String[] inputArr = input.split("\\s+", 2);
-            String command = inputArr[0];
-            // Carry out user command
             try {
+                command = UserCommand.fromString(inputArr[0]);
                 msg = switch (command) {
-                    case EXIT_COMMAND -> {
+                    case EXIT -> {
                         exit = true;
-                        yield exitMessage;
+                        yield UserMessages.EXIT;
                     }
-                    case LIST_COMMAND -> userTaskStore.listTasks();
-                    case MARK_TASK_COMMAND -> doMarkTaskCommand(inputArr[1]);
-                    case UNMARK_TASK_COMMAND -> doUnmarkTaskCommand(inputArr[1]);
-                    case ADD_TODO_COMMAND -> doAddTodoCommand(inputArr[1]);
-                    case ADD_DEADLINE_COMMAND -> doAddDeadlineCommand(inputArr[1]);
-                    case ADD_EVENT_COMMAND -> doAddEventCommand(inputArr[1]);
-                    case DELETE_COMMAND -> doDeleteCommand(inputArr[1]);
-                    default -> throw new WoutException(invalidCommandMessage);
+                    case LIST -> userTaskStore.listTasks();
+                    case MARK -> doMarkTaskCommand(inputArr[1]);
+                    case UNMARK -> doUnmarkTaskCommand(inputArr[1]);
+                    case TODO -> doAddTodoCommand(inputArr[1]);
+                    case DEADLINE -> doAddDeadlineCommand(inputArr[1]);
+                    case EVENT -> doAddEventCommand(inputArr[1]);
+                    case DELETE -> doDeleteCommand(inputArr[1]);
                 };
                 printMessage(msg);
             } catch (ArrayIndexOutOfBoundsException e) {
-                printMessage("Please provide input for " + command + " command!\n");
+                printMessage("Please provide input for " + inputArr[0] + " command!\n");
             } catch (WoutException e) {
                 printMessage(e.toString());
             }
