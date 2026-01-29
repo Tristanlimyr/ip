@@ -127,32 +127,32 @@ public class Wout {
             // Carry out user command
             try {
                 switch (command) {
-                    case EXIT_COMMAND:
-                        exit = true;
-                        break;
-                    case LIST_COMMAND:
-                        Wout.printMessage(userTaskStore.listTasks());
-                        break;
-                    case MARK_TASK_COMMAND:
-                        doMarkTaskCommand(inputArr[1]);
-                        break;
-                    case UNMARK_TASK_COMMAND:
-                        doUnmarkTaskCommand(inputArr[1]);
-                        break;
-                    case ADD_TODO_COMMAND:
-                        doAddTodoCommand(inputArr[1]);
-                        break;
-                    case ADD_DEADLINE_COMMAND:
-                        doAddDeadlineCommand(inputArr[1]);
-                        break;
-                    case ADD_EVENT_COMMAND:
-                        doAddEventCommand(inputArr[1]);
-                        break;
-                    case DELETE_COMMAND:
-                        doDeleteCommand(inputArr[1]);
-                        break;
-                    default:
-                        throw new WoutException(invalidCommandMessage);
+                case EXIT_COMMAND:
+                    exit = true;
+                    break;
+                case LIST_COMMAND:
+                    Wout.printMessage(userTaskStore.listTasks());
+                    break;
+                case MARK_TASK_COMMAND:
+                    doMarkTaskCommand(inputArr[1]);
+                    break;
+                case UNMARK_TASK_COMMAND:
+                    doUnmarkTaskCommand(inputArr[1]);
+                    break;
+                case ADD_TODO_COMMAND:
+                    doAddTodoCommand(inputArr[1]);
+                    break;
+                case ADD_DEADLINE_COMMAND:
+                    doAddDeadlineCommand(inputArr[1]);
+                    break;
+                case ADD_EVENT_COMMAND:
+                    doAddEventCommand(inputArr[1]);
+                    break;
+                case DELETE_COMMAND:
+                    doDeleteCommand(inputArr[1]);
+                    break;
+                default:
+                    throw new WoutException(invalidCommandMessage);
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 printMessage("Please provide input for " + command + " command!\n");
