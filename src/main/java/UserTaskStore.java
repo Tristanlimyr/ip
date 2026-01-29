@@ -3,7 +3,7 @@ import java.util.List;
 
 public class UserTaskStore {
 
-    private List<Task> listOfTasks;
+    private final List<Task> listOfTasks;
 
     public UserTaskStore() {
         this.listOfTasks = new ArrayList<Task>();
