@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -122,6 +124,7 @@ public class Wout {
             default -> throw new WoutException(isDone + " is not a valid status\n");
         };
     }
+
     /**
      * Read tasks from FILE_PATH and add tasks into userTaskStore.
      * If file does not exist, do nothing
@@ -137,7 +140,7 @@ public class Wout {
                 inputArr = inputArr[1].split("\\s+", 2);
                 UserCommand command = UserCommand.fromString(inputArr[0]);
                 switch (command) {
-                    case EXIT -> doAddTodoCommand(inputArr[1], isDone);
+                    case TODO -> doAddTodoCommand(inputArr[1], isDone);
                     case DEADLINE ->  doAddDeadlineCommand(inputArr[1], isDone);
                     case EVENT -> doAddEventCommand(inputArr[1], isDone);
                     default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!\n");
@@ -150,7 +153,7 @@ public class Wout {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         loadTaskList();
         printMessage(UserMessages.GREET);
 
@@ -176,6 +179,7 @@ public class Wout {
                     case DELETE -> doDeleteCommand(inputArr[1]);
                 };
                 printMessage(msg);
+                userTaskStore.storeTaskList(FILE_PATH);
             } catch (ArrayIndexOutOfBoundsException e) {
                 printMessage("Please provide input for " + inputArr[0] + " command!\n");
             } catch (WoutException e) {

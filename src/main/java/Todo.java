@@ -13,4 +13,9 @@ public class Todo extends Task{
         return "[T]" + super.toString();
     }
 
+    @Override
+    public String toEntry() {
+        return super.toEntry() + " # todo " + description;
+    }
+
 }

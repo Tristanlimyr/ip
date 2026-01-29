@@ -29,4 +29,7 @@ public class Task {
         return "[" + getStatusIcon() + "] " + description;
     }
 
+    public String toEntry() {
+        return (isDone ? "1" : "0");
+    }
 }
