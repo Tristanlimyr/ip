@@ -2,9 +2,13 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task(String description) {
+    public Task(String description, boolean isDone) {
         this.description = description;
-        this.isDone = false;
+        this.isDone = isDone;
+    }
+
+    public Task(String description) {
+        this(description, false);
     }
 
     public String getStatusIcon() {
@@ -25,4 +29,7 @@ public class Task {
         return "[" + getStatusIcon() + "] " + description;
     }
 
+    public String toEntry() {
+        return (isDone ? "1" : "0");
+    }
 }

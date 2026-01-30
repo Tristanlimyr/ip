@@ -1,9 +1,14 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class UserTaskStore {
 
-    private List<Task> listOfTasks;
+    private final List<Task> listOfTasks;
 
     public UserTaskStore() {
         this.listOfTasks = new ArrayList<Task>();
@@ -30,8 +35,7 @@ public class UserTaskStore {
     }
 
     public Task deleteTaskAt(int index) {
-        Task task = listOfTasks.remove(index - 1);
-        return task;
+        return listOfTasks.remove(index - 1);
     }
 
     public String listTasks() {
@@ -46,5 +50,27 @@ public class UserTaskStore {
             }
             return tasks;
         }
+    }
+
+    private static boolean parseTaskDoneStatus(String isDone) throws WoutException {
+        return switch (isDone) {
+            case "1" -> true;
+            case "0" -> false;
+            default -> throw new WoutException(isDone + " is not a valid status\n");
+        };
+    }
+
+    /**
+     * Store tasks in file by overwriting the file.
+     * If file does not exist, create file.
+     *
+     * @param filePath Relative file path of the file to write to.
+     */
+    public void storeTaskList(String filePath) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath);
+        for (Task task : listOfTasks) {
+            fileWriter.write(task.toEntry() + "\n");
+        }
+        fileWriter.close();
     }
 }
