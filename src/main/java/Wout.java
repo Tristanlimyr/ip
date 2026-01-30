@@ -130,8 +130,8 @@ public class Wout {
                 String[] inputArr = input.split("\\s+#\\s+");
                 boolean isDone = parseTaskDoneStatus(inputArr[0]);
                 inputArr = inputArr[1].split("\\s+", 2);
-                UserCommand command = UserCommand.fromString(inputArr[0]);
-                switch (command) {
+                Keyword keyword = Keyword.fromString(inputArr[0]);
+                switch (keyword) {
                     case TODO -> doAddTodoCommand(inputArr[1], isDone);
                     case DEADLINE ->  doAddDeadlineCommand(inputArr[1], isDone);
                     case EVENT -> doAddEventCommand(inputArr[1], isDone);
@@ -151,13 +151,13 @@ public class Wout {
 
         boolean exit = false;
         String msg;
-        UserCommand command;
+        Keyword keyword;
         while (!exit) {
             String input = Wout.userInputScanner.nextLine();
             String[] inputArr = input.split("\\s+", 2);
             try {
-                command = UserCommand.fromString(inputArr[0]);
-                msg = switch (command) {
+                keyword = Keyword.fromString(inputArr[0]);
+                msg = switch (keyword) {
                     case EXIT -> {
                         exit = true;
                         yield Ui.EXIT;
