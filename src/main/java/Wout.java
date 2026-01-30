@@ -80,12 +80,12 @@ public class Wout {
             throw new WoutException("Please provide a valid input for Deadline tasks\n");
         } else {
             try {
-                LocalDateTime by = LocalDateTime.parse(matcher.group(2), UserMessages.DATE_TIME_ENTRY);
+                LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 Task deadline = new Deadline(matcher.group(1), by, isDone);
                 userTaskStore.storeTask(deadline);
                 return addTaskMessage(deadline);
             } catch (DateTimeParseException e) {
-                throw new WoutException(UserMessages.INVALID_DATE_TIME);
+                throw new WoutException(Ui.INVALID_DATE_TIME);
             }
         }
     }
@@ -100,13 +100,13 @@ public class Wout {
             throw new WoutException("Please provide a valid input for Event tasks\n");
         } else {
             try {
-                LocalDateTime from = LocalDateTime.parse(matcher.group(2), UserMessages.DATE_TIME_ENTRY);
-                LocalDateTime to = LocalDateTime.parse(matcher.group(3), UserMessages.DATE_TIME_ENTRY);
+                LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
+                LocalDateTime to = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
                 Task event = new Event(matcher.group(1), from, to, isDone);
                 userTaskStore.storeTask(event);
                 return addTaskMessage(event);
             } catch (DateTimeParseException e) {
-                throw new WoutException(UserMessages.INVALID_DATE_TIME);
+                throw new WoutException(Ui.INVALID_DATE_TIME);
             }
         }
     }
@@ -167,7 +167,7 @@ public class Wout {
 
     public static void main(String[] args) throws IOException {
         loadTaskList();
-        printMessage(UserMessages.GREET);
+        printMessage(Ui.GREET);
 
         boolean exit = false;
         String msg;
@@ -180,7 +180,7 @@ public class Wout {
                 msg = switch (command) {
                     case EXIT -> {
                         exit = true;
-                        yield UserMessages.EXIT;
+                        yield Ui.EXIT;
                     }
                     case LIST -> userTaskStore.listTasks();
                     case MARK -> doMarkTaskCommand(inputArr[1]);

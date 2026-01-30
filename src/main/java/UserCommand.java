@@ -20,7 +20,7 @@ public enum UserCommand {
                 return userCommand;
             }
         }
-        throw new WoutException(UserMessages.INVALID_COMMAND);
+        throw new WoutException(Ui.INVALID_COMMAND);
     }
 }
 
