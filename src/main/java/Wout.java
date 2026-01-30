@@ -18,27 +18,11 @@ public class Wout {
     public final static String EVENT_REGEX =
             "^(?!.*\\/from.*\\/from)(?!.*\\/to.*\\/to)(.+?)\\s+\\/from\\s+(.+?)\\s+\\/to\\s+(.+)$";
 
-
-    public static void printMessage(String message) {
-        System.out.println("________________________________\n"
-                + message
-                + "________________________________\n"
-        );
-    }
-
-    public static String addTaskMessage(Task task) {
-          return "Got it. I've added this task:\n"
-                + "  " + task + "\n"
-                + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n";
-    }
-
     private static String doMarkTaskCommand(String input) throws WoutException {
         try {
             int index = Integer.parseInt(input);
             Task task = userTaskStore.markTaskAt(index);
-            return "Nice! I've marked this task as done:\n"
-                    + "  " + task + "\n"
-                    + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n";
+            return Ui.markTaskMessage(task, userTaskStore);
         } catch (NumberFormatException e) {
             throw new WoutException(input + " is not a number!\n");
         } catch (IndexOutOfBoundsException e) {
@@ -50,9 +34,7 @@ public class Wout {
         try {
             int index = Integer.parseInt(input);
             Task task = userTaskStore.unmarkTaskAt(index);
-            return "Ok, I've marked this task as not done yet:\n"
-                    + "  " + task + "\n"
-                    + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n";
+            return Ui.unmarkTaskMessage(task, userTaskStore);
         } catch (NumberFormatException e) {
             throw new WoutException(input + " is not a number!\n");
         } catch (IndexOutOfBoundsException e) {
@@ -66,7 +48,7 @@ public class Wout {
         } else {
             Task todo = new Todo(input, isDone);
             userTaskStore.storeTask(todo);
-            return addTaskMessage(todo);
+            return Ui.addTaskMessage(todo, userTaskStore);
         }
     }
 
@@ -83,7 +65,7 @@ public class Wout {
                 LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 Task deadline = new Deadline(matcher.group(1), by, isDone);
                 userTaskStore.storeTask(deadline);
-                return addTaskMessage(deadline);
+                return Ui.addTaskMessage(deadline, userTaskStore);
             } catch (DateTimeParseException e) {
                 throw new WoutException(Ui.INVALID_DATE_TIME);
             }
@@ -104,7 +86,7 @@ public class Wout {
                 LocalDateTime to = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
                 Task event = new Event(matcher.group(1), from, to, isDone);
                 userTaskStore.storeTask(event);
-                return addTaskMessage(event);
+                return Ui.addTaskMessage(event, userTaskStore);
             } catch (DateTimeParseException e) {
                 throw new WoutException(Ui.INVALID_DATE_TIME);
             }
@@ -119,9 +101,7 @@ public class Wout {
         try {
             int index = Integer.parseInt(input);
             Task task = userTaskStore.deleteTaskAt(index);
-            return "Noted. I've remove this task:\n"
-                    + "  " + task + "\n"
-                    + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n";
+            return Ui.deleteTaskMessage(task, userTaskStore);
         } catch (NumberFormatException e) {
             throw new WoutException(input + " is not number!\n");
         } catch (IndexOutOfBoundsException e) {
@@ -161,13 +141,13 @@ public class Wout {
         } catch (FileNotFoundException e) {
             return;
         } catch (WoutException e) {
-            printMessage(e.toString());
+            Ui.printWoutException(e);
         }
     }
 
     public static void main(String[] args) throws IOException {
         loadTaskList();
-        printMessage(Ui.GREET);
+        Ui.printGreeting();
 
         boolean exit = false;
         String msg;
@@ -190,12 +170,12 @@ public class Wout {
                     case EVENT -> doAddEventCommand(inputArr[1]);
                     case DELETE -> doDeleteCommand(inputArr[1]);
                 };
-                printMessage(msg);
+                Ui.printMessage(msg);
                 userTaskStore.storeTaskList(FILE_PATH);
             } catch (ArrayIndexOutOfBoundsException e) {
-                printMessage("Please provide input for " + inputArr[0] + " command!\n");
+                Ui.printMessage("Please provide input for " + inputArr[0] + " command!\n");
             } catch (WoutException e) {
-                printMessage(e.toString());
+                Ui.printMessage(e.toString());
             }
         }
     }
