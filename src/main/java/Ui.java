@@ -9,6 +9,12 @@ public class Ui {
     public static final DateTimeFormatter DATE_TIME_DISPLAY = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
     public static final DateTimeFormatter DATE_TIME_ENTRY = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    // Regex
+    public final static String DEADLINE_REGEX =
+            "^(?!.*\\/by.*\\/by)(.+?)\\s+\\/by\\s+(.+)$";
+    public final static String EVENT_REGEX =
+            "^(?!.*\\/from.*\\/from)(?!.*\\/to.*\\/to)(.+?)\\s+\\/from\\s+(.+?)\\s+\\/to\\s+(.+)$";
+
     public static void printMessage(String message) {
         System.out.println("________________________________\n"
                 + message

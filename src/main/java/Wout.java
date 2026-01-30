@@ -9,20 +9,15 @@ import java.util.regex.Matcher;
 
 public class Wout {
     private static final Scanner userInputScanner = new Scanner(System.in);
-    private static final TaskList userTaskStore = new TaskList();
+    private static TaskList tasks;
     private static final String FILE_PATH = "./data/wout.txt";
-
-    // Regex
-    public final static String DEADLINE_REGEX =
-            "^(?!.*\\/by.*\\/by)(.+?)\\s+\\/by\\s+(.+)$";
-    public final static String EVENT_REGEX =
-            "^(?!.*\\/from.*\\/from)(?!.*\\/to.*\\/to)(.+?)\\s+\\/from\\s+(.+?)\\s+\\/to\\s+(.+)$";
+    private static final Storage storage = new Storage(FILE_PATH);
 
     private static String doMarkTaskCommand(String input) throws WoutException {
         try {
             int index = Integer.parseInt(input);
-            Task task = userTaskStore.markTaskAt(index);
-            return Ui.markTaskMessage(task, userTaskStore);
+            Task task = tasks.markTaskAt(index);
+            return Ui.markTaskMessage(task, tasks);
         } catch (NumberFormatException e) {
             throw new WoutException(input + " is not a number!\n");
         } catch (IndexOutOfBoundsException e) {
@@ -33,8 +28,8 @@ public class Wout {
     private static String doUnmarkTaskCommand(String input) throws WoutException {
         try {
             int index = Integer.parseInt(input);
-            Task task = userTaskStore.unmarkTaskAt(index);
-            return Ui.unmarkTaskMessage(task, userTaskStore);
+            Task task = tasks.unmarkTaskAt(index);
+            return Ui.unmarkTaskMessage(task, tasks);
         } catch (NumberFormatException e) {
             throw new WoutException(input + " is not a number!\n");
         } catch (IndexOutOfBoundsException e) {
@@ -47,8 +42,8 @@ public class Wout {
             throw new WoutException("Please provide a description for Todo tasks\n");
         } else {
             Task todo = new Todo(input, isDone);
-            userTaskStore.storeTask(todo);
-            return Ui.addTaskMessage(todo, userTaskStore);
+            tasks.storeTask(todo);
+            return Ui.addTaskMessage(todo, tasks);
         }
     }
 
@@ -57,15 +52,15 @@ public class Wout {
     }
 
     private static String doAddDeadlineCommand(String input, boolean isDone) throws WoutException {
-        Matcher matcher = Pattern.compile(DEADLINE_REGEX).matcher(input);
+        Matcher matcher = Pattern.compile(Ui.DEADLINE_REGEX).matcher(input);
         if (!matcher.matches()) {
             throw new WoutException("Please provide a valid input for Deadline tasks\n");
         } else {
             try {
                 LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 Task deadline = new Deadline(matcher.group(1), by, isDone);
-                userTaskStore.storeTask(deadline);
-                return Ui.addTaskMessage(deadline, userTaskStore);
+                tasks.storeTask(deadline);
+                return Ui.addTaskMessage(deadline, tasks);
             } catch (DateTimeParseException e) {
                 throw new WoutException(Ui.INVALID_DATE_TIME);
             }
@@ -77,7 +72,7 @@ public class Wout {
     }
 
     private static String doAddEventCommand(String input, boolean isDone) throws WoutException {
-        Matcher matcher = Pattern.compile(EVENT_REGEX).matcher(input);
+        Matcher matcher = Pattern.compile(Ui.EVENT_REGEX).matcher(input);
         if (!matcher.matches()) {
             throw new WoutException("Please provide a valid input for Event tasks\n");
         } else {
@@ -85,8 +80,8 @@ public class Wout {
                 LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 LocalDateTime to = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
                 Task event = new Event(matcher.group(1), from, to, isDone);
-                userTaskStore.storeTask(event);
-                return Ui.addTaskMessage(event, userTaskStore);
+                tasks.storeTask(event);
+                return Ui.addTaskMessage(event, tasks);
             } catch (DateTimeParseException e) {
                 throw new WoutException(Ui.INVALID_DATE_TIME);
             }
@@ -100,8 +95,8 @@ public class Wout {
     private static String doDeleteCommand(String input) throws WoutException {
         try {
             int index = Integer.parseInt(input);
-            Task task = userTaskStore.deleteTaskAt(index);
-            return Ui.deleteTaskMessage(task, userTaskStore);
+            Task task = tasks.deleteTaskAt(index);
+            return Ui.deleteTaskMessage(task, tasks);
         } catch (NumberFormatException e) {
             throw new WoutException(input + " is not number!\n");
         } catch (IndexOutOfBoundsException e) {
@@ -109,44 +104,13 @@ public class Wout {
         }
     }
 
-    private static boolean parseTaskDoneStatus(String isDone) throws WoutException {
-        return switch (isDone) {
-            case "1" -> true;
-            case "0" -> false;
-            default -> throw new WoutException(isDone + " is not a valid status\n");
-        };
-    }
-
-    /**
-     * Read tasks from FILE_PATH and add tasks into userTaskStore.
-     * If file does not exist, do nothing
-     */
-    private static void loadTaskList() {
-        File file = new File(FILE_PATH);
+    public static void main(String[] args) throws IOException {
         try {
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String input = scanner.nextLine();
-                String[] inputArr = input.split("\\s+#\\s+");
-                boolean isDone = parseTaskDoneStatus(inputArr[0]);
-                inputArr = inputArr[1].split("\\s+", 2);
-                Keyword keyword = Keyword.fromString(inputArr[0]);
-                switch (keyword) {
-                    case TODO -> doAddTodoCommand(inputArr[1], isDone);
-                    case DEADLINE ->  doAddDeadlineCommand(inputArr[1], isDone);
-                    case EVENT -> doAddEventCommand(inputArr[1], isDone);
-                    default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!\n");
-                }
-            }
-        } catch (FileNotFoundException e) {
-            return;
+            tasks = new TaskList(storage.load());
         } catch (WoutException e) {
             Ui.printWoutException(e);
+            tasks = new TaskList();
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        loadTaskList();
         Ui.printGreeting();
 
         boolean exit = false;
@@ -162,7 +126,7 @@ public class Wout {
                         exit = true;
                         yield Ui.EXIT;
                     }
-                    case LIST -> userTaskStore.listTasks();
+                    case LIST -> tasks.listTasks();
                     case MARK -> doMarkTaskCommand(inputArr[1]);
                     case UNMARK -> doUnmarkTaskCommand(inputArr[1]);
                     case TODO -> doAddTodoCommand(inputArr[1]);
@@ -171,7 +135,7 @@ public class Wout {
                     case DELETE -> doDeleteCommand(inputArr[1]);
                 };
                 Ui.printMessage(msg);
-                userTaskStore.storeTaskList(FILE_PATH);
+                storage.store(tasks.getTasks());
             } catch (ArrayIndexOutOfBoundsException e) {
                 Ui.printMessage("Please provide input for " + inputArr[0] + " command!\n");
             } catch (WoutException e) {

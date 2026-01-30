@@ -7,8 +7,12 @@ public class TaskList {
 
     private final List<Task> listOfTasks;
 
+    public TaskList(List<Task> tasks) {
+        this.listOfTasks = tasks;
+    }
+
     public TaskList() {
-        this.listOfTasks = new ArrayList<Task>();
+        this(new ArrayList<Task>());
     }
 
     public void storeTask(Task task) {
@@ -49,17 +53,8 @@ public class TaskList {
         }
     }
 
-    /**
-     * Store tasks in file by overwriting the file.
-     * If file does not exist, create file.
-     *
-     * @param filePath Relative file path of the file to write to.
-     */
-    public void storeTaskList(String filePath) throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath);
-        for (Task task : listOfTasks) {
-            fileWriter.write(task.toEntry() + "\n");
-        }
-        fileWriter.close();
+    public List<Task> getTasks() {
+        return listOfTasks;
     }
+
 }
