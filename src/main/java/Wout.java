@@ -1,7 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -78,9 +79,14 @@ public class Wout {
         if (!matcher.matches()) {
             throw new WoutException("Please provide a valid input for Deadline tasks\n");
         } else {
-            Task deadline = new Deadline(matcher.group(1), matcher.group(2), isDone);
-            userTaskStore.storeTask(deadline);
-            return addTaskMessage(deadline);
+            try {
+                LocalDateTime by = LocalDateTime.parse(matcher.group(2), UserMessages.DATE_TIME_ENTRY);
+                Task deadline = new Deadline(matcher.group(1), by, isDone);
+                userTaskStore.storeTask(deadline);
+                return addTaskMessage(deadline);
+            } catch (DateTimeParseException e) {
+                throw new WoutException(UserMessages.INVALID_DATE_TIME);
+            }
         }
     }
 
@@ -93,9 +99,15 @@ public class Wout {
         if (!matcher.matches()) {
             throw new WoutException("Please provide a valid input for Event tasks\n");
         } else {
-            Task event = new Event(matcher.group(1), matcher.group(2), matcher.group(3), isDone);
-            userTaskStore.storeTask(event);
-            return addTaskMessage(event);
+            try {
+                LocalDateTime from = LocalDateTime.parse(matcher.group(2), UserMessages.DATE_TIME_ENTRY);
+                LocalDateTime to = LocalDateTime.parse(matcher.group(3), UserMessages.DATE_TIME_ENTRY);
+                Task event = new Event(matcher.group(1), from, to, isDone);
+                userTaskStore.storeTask(event);
+                return addTaskMessage(event);
+            } catch (DateTimeParseException e) {
+                throw new WoutException(UserMessages.INVALID_DATE_TIME);
+            }
         }
     }
 

@@ -1,10 +1,7 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class UserTaskStore {
 
@@ -50,14 +47,6 @@ public class UserTaskStore {
             }
             return tasks;
         }
-    }
-
-    private static boolean parseTaskDoneStatus(String isDone) throws WoutException {
-        return switch (isDone) {
-            case "1" -> true;
-            case "0" -> false;
-            default -> throw new WoutException(isDone + " is not a valid status\n");
-        };
     }
 
     /**
