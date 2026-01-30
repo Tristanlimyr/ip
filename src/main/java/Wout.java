@@ -2,6 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -78,9 +82,16 @@ public class Wout {
         if (!matcher.matches()) {
             throw new WoutException("Please provide a valid input for Deadline tasks\n");
         } else {
-            Task deadline = new Deadline(matcher.group(1), matcher.group(2), isDone);
-            userTaskStore.storeTask(deadline);
-            return addTaskMessage(deadline);
+            try {
+                String[] byDateTime = matcher.group(2).split(" ");
+                LocalDate byDate = LocalDate.parse(byDateTime[0]);
+                LocalTime byTime = LocalTime.parse(byDateTime[1]);
+                Task deadline = new Deadline(matcher.group(1), LocalDateTime.of(byDate, byTime), isDone);
+                userTaskStore.storeTask(deadline);
+                return addTaskMessage(deadline);
+            } catch (DateTimeParseException e) {
+                throw new WoutException(UserMessages.INVALID_DATE);
+            }
         }
     }
 
@@ -93,9 +104,20 @@ public class Wout {
         if (!matcher.matches()) {
             throw new WoutException("Please provide a valid input for Event tasks\n");
         } else {
-            Task event = new Event(matcher.group(1), matcher.group(2), matcher.group(3), isDone);
-            userTaskStore.storeTask(event);
-            return addTaskMessage(event);
+            try {
+                String[] fromDateTime = matcher.group(2).split(" ");
+                LocalDate fromDate = LocalDate.parse(fromDateTime[0]);
+                LocalTime fromTime = LocalTime.parse(fromDateTime[1]);
+                String[] toDateTime = matcher.group(3).split(" ");
+                LocalDate toDate = LocalDate.parse(toDateTime[0]);
+                LocalTime toTime = LocalTime.parse(toDateTime[1]);
+                Task event = new Event(matcher.group(1), LocalDateTime.of(fromDate, fromTime),
+                        LocalDateTime.of(toDate, toTime), isDone);
+                userTaskStore.storeTask(event);
+                return addTaskMessage(event);
+            } catch (DateTimeParseException e) {
+                throw new WoutException(UserMessages.INVALID_DATE);
+            }
         }
     }
 
