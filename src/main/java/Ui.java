@@ -20,25 +20,25 @@ public class Ui {
         printMessage(GREET);
     }
 
-    public static String addTaskMessage(Task task, UserTaskStore userTaskStore) {
+    public static String addTaskMessage(Task task, TaskList userTaskStore) {
         return "Got it. I've added this task:\n"
                 + "  " + task + "\n"
                 + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n";
     }
 
-    public static String markTaskMessage(Task task, UserTaskStore userTaskStore) {
+    public static String markTaskMessage(Task task, TaskList userTaskStore) {
         return "Nice! I've marked this task as done:\n"
                 + "  " + task + "\n"
                 + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n";
     }
 
-    public static String unmarkTaskMessage(Task task, UserTaskStore userTaskStore) {
+    public static String unmarkTaskMessage(Task task, TaskList userTaskStore) {
         return "Ok, I've marked this task as not done yet:\n"
                 + "  " + task + "\n"
                 + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n";
     }
 
-    public static String deleteTaskMessage(Task task, UserTaskStore userTaskStore) {
+    public static String deleteTaskMessage(Task task, TaskList userTaskStore) {
         return "Noted. I've remove this task:\n"
                 + "  " + task + "\n"
                 + "Now you have " + userTaskStore.getNumOfTasks() + " tasks in the list.\n";

@@ -3,11 +3,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserTaskStore {
+public class TaskList {
 
     private final List<Task> listOfTasks;
 
-    public UserTaskStore() {
+    public TaskList() {
         this.listOfTasks = new ArrayList<Task>();
     }
 

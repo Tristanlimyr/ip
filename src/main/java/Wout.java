@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 
 public class Wout {
     private static final Scanner userInputScanner = new Scanner(System.in);
-    private static final UserTaskStore userTaskStore = new UserTaskStore();
+    private static final TaskList userTaskStore = new TaskList();
     private static final String FILE_PATH = "./data/wout.txt";
 
     // Regex
