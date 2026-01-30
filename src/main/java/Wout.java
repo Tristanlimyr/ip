@@ -83,14 +83,12 @@ public class Wout {
             throw new WoutException("Please provide a valid input for Deadline tasks\n");
         } else {
             try {
-                String[] byDateTime = matcher.group(2).split(" ");
-                LocalDate byDate = LocalDate.parse(byDateTime[0]);
-                LocalTime byTime = LocalTime.parse(byDateTime[1]);
-                Task deadline = new Deadline(matcher.group(1), LocalDateTime.of(byDate, byTime), isDone);
+                LocalDateTime by = LocalDateTime.parse(matcher.group(2), UserMessages.DATE_TIME_ENTRY);
+                Task deadline = new Deadline(matcher.group(1), by, isDone);
                 userTaskStore.storeTask(deadline);
                 return addTaskMessage(deadline);
             } catch (DateTimeParseException e) {
-                throw new WoutException(UserMessages.INVALID_DATE);
+                throw new WoutException(UserMessages.INVALID_DATE_TIME);
             }
         }
     }
@@ -105,18 +103,13 @@ public class Wout {
             throw new WoutException("Please provide a valid input for Event tasks\n");
         } else {
             try {
-                String[] fromDateTime = matcher.group(2).split(" ");
-                LocalDate fromDate = LocalDate.parse(fromDateTime[0]);
-                LocalTime fromTime = LocalTime.parse(fromDateTime[1]);
-                String[] toDateTime = matcher.group(3).split(" ");
-                LocalDate toDate = LocalDate.parse(toDateTime[0]);
-                LocalTime toTime = LocalTime.parse(toDateTime[1]);
-                Task event = new Event(matcher.group(1), LocalDateTime.of(fromDate, fromTime),
-                        LocalDateTime.of(toDate, toTime), isDone);
+                LocalDateTime from = LocalDateTime.parse(matcher.group(2), UserMessages.DATE_TIME_ENTRY);
+                LocalDateTime to = LocalDateTime.parse(matcher.group(3), UserMessages.DATE_TIME_ENTRY);
+                Task event = new Event(matcher.group(1), from, to, isDone);
                 userTaskStore.storeTask(event);
                 return addTaskMessage(event);
             } catch (DateTimeParseException e) {
-                throw new WoutException(UserMessages.INVALID_DATE);
+                throw new WoutException(UserMessages.INVALID_DATE_TIME);
             }
         }
     }

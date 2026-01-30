@@ -14,11 +14,12 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + by.format(UserMessages.DATE_TIME_DISPLAY) + ")";
     }
 
     @Override
     public String toEntry() {
-        return super.toEntry() + " # deadline " + description + " /by " + by;
+        return super.toEntry() + " # deadline "
+                + description + " /by " + by.format(UserMessages.DATE_TIME_ENTRY);
     }
 }
