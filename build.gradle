@@ -34,6 +34,7 @@ application {
 shadowJar {
     archiveBaseName = "wout"
     archiveClassifier = null
+    archiveVersion = "1.0"
 }
 
 run{
