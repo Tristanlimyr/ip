@@ -17,10 +17,17 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class to save tasks in the hard disk whenever the task list changes and
+ * load data from the hard disk when the chatbot starts up.
+ */
 public class Storage {
 
     private final String filePath;
 
+    /**
+     * @param filePath Path of file to be read from and written to.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
@@ -74,7 +81,8 @@ public class Storage {
      * Read tasks from file and return tasks read.
      * If file does not exist, return empty list.
      *
-     * @return list of Task read from file
+     * @return list of Task read from file.
+     * @throws WoutException If file contains invalid entries.
      */
     public List<Task> load() throws WoutException {
         File file = new File(filePath);
@@ -105,10 +113,11 @@ public class Storage {
     }
 
     /**
-     * Write tasks in file by overwriting the file.
+     * Writes tasks in file by overwriting the file.
      * If file does not exist, create file.
      *
-     * @param listOfTasks tasks to be written in file
+     * @param listOfTasks tasks to be written in file.
+     * @throws WoutException If there is an issue with writing to file.
      */
     public void store(List<Task> listOfTasks) throws WoutException {
         try {

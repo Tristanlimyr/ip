@@ -16,6 +16,9 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class to parse user inputs and create commands from valid user inputs.
+ */
 public class Parser {
 
     public static final String DEADLINE_REGEX =
@@ -93,6 +96,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns command corresponding to a valid user input.
+     *
+     * @param fullCommand string input by user.
+     * @return command created from user input.
+     * @throws WoutException If user input is invalid.
+     */
     public static Command parse(String fullCommand) throws WoutException {
         String[] commandArr = fullCommand.split("\\s+", 2);
         Keyword keyword = Keyword.fromString(commandArr[0]);

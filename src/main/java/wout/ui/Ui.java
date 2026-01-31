@@ -6,6 +6,9 @@ import wout.task.TaskList;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+/**
+ * Class to read input from user and display messages to user.
+ */
 public class Ui {
     public static final String GREET = "Hello! I'm Wout!\n"
             + "What can I do for you?";
