@@ -24,4 +24,9 @@ public class UnmarkCommand extends Command {
         storage.store(tasks.getTasks());
         ui.printMessage(ui.unmarkTaskMessage(task, tasks));
     }
+
+    @Override
+    public String toString() {
+        return "Unmark task at index " + taskIndex;
+    }
 }

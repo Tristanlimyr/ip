@@ -28,9 +28,9 @@ public class Parser {
             int index = Integer.parseInt(input);
             return new MarkCommand(index);
         } catch (NumberFormatException e) {
-            throw new WoutException(input + " is not a number!\n");
+            throw new WoutException(input + " is not a number!");
         } catch (IndexOutOfBoundsException e) {
-            throw new WoutException("Index " + input + " is not a valid range for marking\n");
+            throw new WoutException("Index " + input + " is not a valid range for marking");
         }
     }
 
@@ -39,15 +39,15 @@ public class Parser {
             int index = Integer.parseInt(input);
             return new UnmarkCommand(index);
         } catch (NumberFormatException e) {
-            throw new WoutException(input + " is not a number!\n");
+            throw new WoutException(input + " is not a number!");
         } catch (IndexOutOfBoundsException e) {
-            throw new WoutException("Index " + input + " is not a valid range for unmarking\n");
+            throw new WoutException("Index " + input + " is not a valid range for unmarking");
         }
     }
 
     private static Command parseTodo(String input) throws WoutException {
         if (input.isEmpty()) {
-            throw new WoutException("Please provide a description for wout.task.Todo tasks\n");
+            throw new WoutException("Please provide a description for Todo tasks");
         } else {
             return new AddCommand(new Todo(input));
         }
@@ -56,7 +56,7 @@ public class Parser {
     private static Command parseDeadline(String input) throws WoutException {
         Matcher matcher = Pattern.compile(DEADLINE_REGEX).matcher(input);
         if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for wout.task.Deadline tasks\n");
+            throw new WoutException("Please provide a valid input for Deadline tasks");
         } else {
             try {
                 LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
@@ -70,7 +70,7 @@ public class Parser {
     private static Command parseEvent(String input) throws WoutException {
         Matcher matcher = Pattern.compile(EVENT_REGEX).matcher(input);
         if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for wout.task.Event tasks\n");
+            throw new WoutException("Please provide a valid input for Event tasks");
         } else {
             try {
                 LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
@@ -87,9 +87,9 @@ public class Parser {
             int index = Integer.parseInt(input);
             return new DeleteCommand(index);
         } catch (NumberFormatException e) {
-            throw new WoutException(input + " is not number!\n");
+            throw new WoutException(input + " is not number!");
         } catch (IndexOutOfBoundsException e) {
-            throw new WoutException("Index " + input + " is not a valid range for deleting\n");
+            throw new WoutException("Index " + input + " is not a valid range for deleting");
         }
     }
 
@@ -108,7 +108,7 @@ public class Parser {
             case DELETE -> parseDelete(commandArr[1]);
             };
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new WoutException("Please provide an input for " + keyword + "\n");
+            throw new WoutException("Please provide an input for " + keyword + "");
         }
     }
 }

@@ -24,4 +24,9 @@ public class MarkCommand extends Command {
         storage.store(tasks.getTasks());
         ui.printMessage(ui.markTaskMessage(task, tasks));
     }
+
+    @Override
+    public String toString() {
+        return "Mark task at index " + taskIndex;
+    }
 }
