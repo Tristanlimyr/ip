@@ -34,7 +34,7 @@ public class TaskList {
      *
      * @param index Index of task to be marked.
      * @return Marked task.
-     * @throws WoutException if not a valid index.
+     * @throws WoutException If not a valid index.
      */
     public Task markTaskAt(int index) throws WoutException {
         try {
@@ -51,7 +51,7 @@ public class TaskList {
      *
      * @param index Index of task to be marked.
      * @return Marked task.
-     * @throws WoutException if not a valid index.
+     * @throws WoutException If not a valid index.
      */
     public Task unmarkTaskAt(int index) throws WoutException {
         try {
@@ -66,7 +66,7 @@ public class TaskList {
     /**
      * @param index Index of task to be deleted.
      * @return Deleted task.
-     * @throws WoutException if not a valid index.
+     * @throws WoutException If not a valid index.
      */
     public Task deleteTaskAt(int index) throws WoutException {
         try {
