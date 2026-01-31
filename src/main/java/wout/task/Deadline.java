@@ -4,14 +4,28 @@ import wout.ui.Ui;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a task that needs to be done by a certain date and time.
+ */
 public class Deadline extends Task {
-    protected LocalDateTime by;
+    private final LocalDateTime by;
 
+    /**
+     * @param description Description of deadline.
+     * @param by Date and time by which the task must be completed.
+     * @param isDone Whether the deadline is completed.
+     */
     public Deadline(String description, LocalDateTime by, boolean isDone) {
         super(description, isDone);
         this.by = by;
     }
 
+    /**
+     * Constructs deadline which is not done.
+     *
+     * @param description Description of deadline.
+     * @param by Date and time by which the task must be completed.
+     */
     public Deadline(String description, LocalDateTime by) {
         this(description, by, false);
     }
@@ -24,6 +38,6 @@ public class Deadline extends Task {
     @Override
     public String toEntry() {
         return super.toEntry() + " # deadline "
-                + description + " /by " + by.format(Ui.DATE_TIME_ENTRY);
+                + getDescription() + " /by " + by.format(Ui.DATE_TIME_ENTRY);
     }
 }

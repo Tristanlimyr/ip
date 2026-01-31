@@ -3,6 +3,9 @@ package wout.task;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a list of tasks
+ */
 public class TaskList {
 
     private final List<Task> listOfTasks;
@@ -23,18 +26,36 @@ public class TaskList {
         return listOfTasks.size();
     }
 
+    /**
+     * Marks task as done and returns marked task.
+     *
+     * @param index Index of task to be marked.
+     * @return Marked task.
+     */
     public Task markTaskAt(int index) {
         Task task = listOfTasks.get(index - 1);
         task.markAsDone();
         return task;
     }
 
+    /**
+     * Marks task as not done and returns marked task.
+     *
+     * @param index Index of task to be marked.
+     * @return Marked task.
+     */
     public Task unmarkTaskAt(int index) {
         Task task = listOfTasks.get(index - 1);
         task.unmarkAsDone();
         return task;
     }
 
+    /**
+     * Deletes task from list.
+     *
+     * @param index Index of task to be deleted.
+     * @return Deleted task.
+     */
     public Task deleteTaskAt(int index) {
         return listOfTasks.remove(index - 1);
     }

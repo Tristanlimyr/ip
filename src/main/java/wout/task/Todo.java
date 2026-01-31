@@ -1,11 +1,21 @@
 package wout.task;
 
+/**
+ * Represents a task that needs to be done.
+ */
 public class Todo extends Task {
 
+    /**
+     * @param description Description of todo item.
+     * @param isDone Whether the todo item is completed.
+     */
     public Todo(String description, boolean isDone) {
         super(description, isDone);
     }
 
+    /**
+     * @param description Description of todo item.
+     */
     public Todo(String description) {
         this(description, false);
     }
@@ -17,7 +27,7 @@ public class Todo extends Task {
 
     @Override
     public String toEntry() {
-        return super.toEntry() + " # todo " + description;
+        return super.toEntry() + " # todo " + getDescription();
     }
 
 }

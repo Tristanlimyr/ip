@@ -1,9 +1,16 @@
 package wout.task;
 
+/**
+ * Represents a task created by user.
+ */
 public class Task {
-    protected String description;
-    protected boolean isDone;
+    private final String description;
+    private boolean isDone;
 
+    /**
+     * @param description Description of task.
+     * @param isDone Whether the task is completed.
+     */
     public Task(String description, boolean isDone) {
         this.description = description;
         this.isDone = isDone;
@@ -13,9 +20,8 @@ public class Task {
         this(description, false);
     }
 
-    public String getStatusIcon() {
-        // mark done task with X
-        return (isDone ? "X" : " ");
+    private String getStatusIcon() {
+        return (isDone ? "X" : " "); // mark done task with X
     }
 
     public void markAsDone() {
@@ -26,11 +32,20 @@ public class Task {
         isDone = false;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
 
+    /**
+     * Returns a string, representing the task, that is ready to be written in file.
+     *
+     * @return a string representation of task
+     */
     public String toEntry() {
         return (isDone ? "1" : "0");
     }
