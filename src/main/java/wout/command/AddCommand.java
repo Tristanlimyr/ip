@@ -24,4 +24,9 @@ public class AddCommand extends Command {
         storage.store(tasks.getTasks());
         ui.printMessage(ui.addTaskMessage(task, tasks));
     }
+
+    @Override
+    public String toString() {
+        return "Add " + task.toString();
+    }
 }

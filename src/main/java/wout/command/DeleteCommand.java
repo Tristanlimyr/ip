@@ -24,4 +24,9 @@ public class DeleteCommand extends Command {
         storage.store(tasks.getTasks());
         ui.printMessage(ui.deleteTaskMessage(task, tasks));
     }
+
+    @Override
+    public String toString() {
+        return "Delete task at index " + taskIndex;
+    }
 }

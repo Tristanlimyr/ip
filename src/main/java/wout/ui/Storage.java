@@ -29,13 +29,13 @@ public class Storage {
         return switch (isDone) {
             case "1" -> true;
             case "0" -> false;
-            default -> throw new WoutException(isDone + " is not a valid status\n");
+            default -> throw new WoutException(isDone + " is not a valid status");
         };
     }
 
     private Task doAddTodoCommand(String input, boolean isDone) throws WoutException {
         if (input.isEmpty()) {
-            throw new WoutException("Please provide a description for wout.task.Todo tasks\n");
+            throw new WoutException("Please provide a description for Todo tasks");
         } else {
             return new Todo(input, isDone);
         }
@@ -44,7 +44,7 @@ public class Storage {
     private Task doAddDeadlineCommand(String input, boolean isDone) throws WoutException {
         Matcher matcher = Pattern.compile(Parser.DEADLINE_REGEX).matcher(input);
         if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for wout.task.Deadline tasks\n");
+            throw new WoutException("Please provide a valid input for Deadline tasks");
         } else {
             try {
                 LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
@@ -58,7 +58,7 @@ public class Storage {
     private Task doAddEventCommand(String input, boolean isDone) throws WoutException {
         Matcher matcher = Pattern.compile(Parser.EVENT_REGEX).matcher(input);
         if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for wout.task.Event tasks\n");
+            throw new WoutException("Please provide a valid input for Event tasks");
         } else {
             try {
                 LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
@@ -74,7 +74,7 @@ public class Storage {
      * Read tasks from file and return tasks read.
      * If file does not exist, return empty list.
      *
-     * @return list of wout.task.Task read from file
+     * @return list of Task read from file
      */
     public List<Task> load() throws WoutException {
         File file = new File(filePath);
@@ -93,7 +93,7 @@ public class Storage {
                         case TODO -> doAddTodoCommand(inputArr[1], isDone);
                         case DEADLINE -> doAddDeadlineCommand(inputArr[1], isDone);
                         case EVENT -> doAddEventCommand(inputArr[1], isDone);
-                        default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!\n");
+                        default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!");
                     };
                     tasks.add(task);
                 }
