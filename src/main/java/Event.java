@@ -16,14 +16,14 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from.format(UserMessages.DATE_TIME_DISPLAY)
-                + " to: " + to.format(UserMessages.DATE_TIME_DISPLAY) + ")";
+        return "[E]" + super.toString() + " (from: " + from.format(Ui.DATE_TIME_DISPLAY)
+                + " to: " + to.format(Ui.DATE_TIME_DISPLAY) + ")";
     }
 
     @Override
     public String toEntry() {
         return super.toEntry() + " # event " + description
-                + " /from " + from.format(UserMessages.DATE_TIME_ENTRY) + " /to "
-                + to.format(UserMessages.DATE_TIME_ENTRY);
+                + " /from " + from.format(Ui.DATE_TIME_ENTRY) + " /to "
+                + to.format(Ui.DATE_TIME_ENTRY);
     }
 }
