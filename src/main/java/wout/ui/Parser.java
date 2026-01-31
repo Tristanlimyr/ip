@@ -1,3 +1,16 @@
+package wout.ui;
+
+import wout.command.Command;
+import wout.command.AddCommand;
+import wout.command.DeleteCommand;
+import wout.command.ExitCommand;
+import wout.command.ListCommand;
+import wout.command.MarkCommand;
+import wout.command.UnmarkCommand;
+import wout.task.Deadline;
+import wout.task.Event;
+import wout.task.Todo;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
@@ -34,7 +47,7 @@ public class Parser {
 
     private static Command parseTodo(String input) throws WoutException {
         if (input.isEmpty()) {
-            throw new WoutException("Please provide a description for Todo tasks\n");
+            throw new WoutException("Please provide a description for wout.task.Todo tasks\n");
         } else {
             return new AddCommand(new Todo(input));
         }
@@ -43,7 +56,7 @@ public class Parser {
     private static Command parseDeadline(String input) throws WoutException {
         Matcher matcher = Pattern.compile(DEADLINE_REGEX).matcher(input);
         if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for Deadline tasks\n");
+            throw new WoutException("Please provide a valid input for wout.task.Deadline tasks\n");
         } else {
             try {
                 LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
@@ -57,7 +70,7 @@ public class Parser {
     private static Command parseEvent(String input) throws WoutException {
         Matcher matcher = Pattern.compile(EVENT_REGEX).matcher(input);
         if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for Event tasks\n");
+            throw new WoutException("Please provide a valid input for wout.task.Event tasks\n");
         } else {
             try {
                 LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);

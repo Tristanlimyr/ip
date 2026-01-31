@@ -1,3 +1,10 @@
+package wout.ui;
+
+import wout.task.Deadline;
+import wout.task.Event;
+import wout.task.Task;
+import wout.task.Todo;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -28,7 +35,7 @@ public class Storage {
 
     private Task doAddTodoCommand(String input, boolean isDone) throws WoutException {
         if (input.isEmpty()) {
-            throw new WoutException("Please provide a description for Todo tasks\n");
+            throw new WoutException("Please provide a description for wout.task.Todo tasks\n");
         } else {
             return new Todo(input, isDone);
         }
@@ -37,7 +44,7 @@ public class Storage {
     private Task doAddDeadlineCommand(String input, boolean isDone) throws WoutException {
         Matcher matcher = Pattern.compile(Parser.DEADLINE_REGEX).matcher(input);
         if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for Deadline tasks\n");
+            throw new WoutException("Please provide a valid input for wout.task.Deadline tasks\n");
         } else {
             try {
                 LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
@@ -51,7 +58,7 @@ public class Storage {
     private Task doAddEventCommand(String input, boolean isDone) throws WoutException {
         Matcher matcher = Pattern.compile(Parser.EVENT_REGEX).matcher(input);
         if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for Event tasks\n");
+            throw new WoutException("Please provide a valid input for wout.task.Event tasks\n");
         } else {
             try {
                 LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
@@ -67,7 +74,7 @@ public class Storage {
      * Read tasks from file and return tasks read.
      * If file does not exist, return empty list.
      *
-     * @return list of Task read from file
+     * @return list of wout.task.Task read from file
      */
     public List<Task> load() throws WoutException {
         File file = new File(filePath);

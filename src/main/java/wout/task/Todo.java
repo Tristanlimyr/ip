@@ -1,4 +1,6 @@
-public class Todo extends Task{
+package wout.task;
+
+public class Todo extends Task {
 
     public Todo(String description, boolean isDone) {
         super(description, isDone);
