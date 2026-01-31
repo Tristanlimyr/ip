@@ -1,12 +1,12 @@
 package wout.command;
 
-import wout.task.Task;
 import wout.ui.Storage;
 import wout.task.TaskList;
 import wout.ui.Ui;
 
-import java.util.List;
-
+/**
+ * Represents a user request to list the tasks in task list.
+ */
 public class ListCommand extends Command {
 
     @Override
@@ -14,6 +14,13 @@ public class ListCommand extends Command {
         return false;
     }
 
+    /**
+     * Lists tasks in task list.
+     *
+     * @param tasks task list to be listed.
+     * @param ui Ui to display user message containing listed tasks.
+     * @param storage Storage will not be used.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.printMessage(ui.listTaskMessage(tasks.getTasks()));

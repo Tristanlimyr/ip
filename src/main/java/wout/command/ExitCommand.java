@@ -4,6 +4,9 @@ import wout.ui.Storage;
 import wout.task.TaskList;
 import wout.ui.Ui;
 
+/**
+ * Represents a user request to exit from Wout.
+ */
 public class ExitCommand extends Command {
 
     @Override
@@ -11,6 +14,9 @@ public class ExitCommand extends Command {
         return true;
     }
 
+    /**
+     * Does nothing.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         return;

@@ -6,9 +6,15 @@ import wout.ui.Storage;
 import wout.ui.Ui;
 import wout.ui.WoutException;
 
+/**
+ * Represents a user request to add a task to task list.
+ */
 public class AddCommand extends Command {
     private final Task task;
 
+    /**
+     * @param task Task to be added to task list.
+     */
     public AddCommand(Task task) {
         this.task = task;
     }
@@ -18,6 +24,14 @@ public class AddCommand extends Command {
         return false;
     }
 
+    /**
+     * Adds task to task list, displays user message and stores updated task list in file.
+     *
+     * @param tasks task list to be added to.
+     * @param ui Ui to display user message.
+     * @param storage Storage to store updated task list in file.
+     * @throws WoutException If there is an issue with writing to file.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws WoutException {
         tasks.storeTask(task);
