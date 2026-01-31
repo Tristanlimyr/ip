@@ -39,18 +39,14 @@ public class TaskList {
         return listOfTasks.remove(index - 1);
     }
 
-    public String listTasks() {
-        String tasks = "Here are the tasks in your list:\n";
-        int index = 1;
-        if (listOfTasks.isEmpty()) {
-            return "list is currently empty!\n";
-        } else {
-            for (Task task : listOfTasks) {
-                tasks += index + ". " + task + "\n";
-                index++;
+    public List<Task> findTasks(String description) {
+        List<Task> tasksFound = new ArrayList<>();
+        for (Task task : this.listOfTasks) {
+            if (task.description.contains(description)) {
+                tasksFound.add(task);
             }
-            return tasks;
         }
+        return tasksFound;
     }
 
     public List<Task> getTasks() {

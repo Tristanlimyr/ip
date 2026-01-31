@@ -4,6 +4,7 @@ import wout.task.Task;
 import wout.task.TaskList;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 public class Ui {
@@ -53,6 +54,30 @@ public class Ui {
         return "Noted. I've remove this task:\n"
                 + "  " + task + "\n"
                 + "Now you have " + taskList.getNumOfTasks() + " tasks in the list.";
+    }
+
+    private String listTasks(List<Task> tasks) {
+        String result = "";
+        int index = 1;
+        if (tasks.isEmpty()) {
+            return "list is currently empty!\n";
+        } else {
+            for (Task task : tasks) {
+                result += index + ". " + task + "\n";
+                index++;
+            }
+            return result;
+        }
+    }
+
+    public String listTaskMessage(List<Task> tasks) {
+        return "Here are the tasks in your list:\n"
+                + listTasks(tasks);
+    }
+
+    public String findTaskMessage(List<Task> tasks) {
+        return "Here are the matching tasks in your list:\n"
+                + listTasks(tasks);
     }
 
     public void printWoutException(WoutException e) {
