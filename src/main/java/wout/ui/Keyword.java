@@ -1,3 +1,5 @@
+package wout.ui;
+
 public enum Keyword {
     EXIT("bye"),
     LIST("list"),

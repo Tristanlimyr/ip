@@ -1,3 +1,11 @@
+package wout.command;
+
+import wout.task.Task;
+import wout.task.TaskList;
+import wout.ui.Storage;
+import wout.ui.Ui;
+import wout.ui.WoutException;
+
 public class DeleteCommand extends Command {
     private final int taskIndex;
 

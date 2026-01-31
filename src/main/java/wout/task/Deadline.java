@@ -1,3 +1,7 @@
+package wout.task;
+
+import wout.ui.Ui;
+
 import java.time.LocalDateTime;
 
 public class Deadline extends Task {

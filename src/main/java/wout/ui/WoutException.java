@@ -1,3 +1,5 @@
+package wout.ui;
+
 public class WoutException extends Exception {
     protected String description;
 
