@@ -1,5 +1,8 @@
 package wout.task;
 
+import wout.ui.Wout;
+import wout.ui.WoutException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +34,16 @@ public class TaskList {
      *
      * @param index Index of task to be marked.
      * @return Marked task.
+     * @throws WoutException if not a valid index.
      */
-    public Task markTaskAt(int index) {
-        Task task = listOfTasks.get(index - 1);
-        task.markAsDone();
-        return task;
+    public Task markTaskAt(int index) throws WoutException {
+        try {
+            Task task = listOfTasks.get(index - 1);
+            task.markAsDone();
+            return task;
+        } catch (IndexOutOfBoundsException e) {
+            throw new WoutException(index + " is not a valid task index to be marked as done");
+        }
     }
 
     /**
@@ -43,21 +51,29 @@ public class TaskList {
      *
      * @param index Index of task to be marked.
      * @return Marked task.
+     * @throws WoutException if not a valid index.
      */
-    public Task unmarkTaskAt(int index) {
-        Task task = listOfTasks.get(index - 1);
-        task.unmarkAsDone();
-        return task;
+    public Task unmarkTaskAt(int index) throws WoutException {
+        try {
+            Task task = listOfTasks.get(index - 1);
+            task.unmarkAsDone();
+            return task;
+        } catch (IndexOutOfBoundsException e) {
+            throw new WoutException(index + " is not a valid index to be marked as not done");
+        }
     }
 
     /**
-     * Deletes task from list.
-     *
      * @param index Index of task to be deleted.
      * @return Deleted task.
+     * @throws WoutException if not a valid index.
      */
-    public Task deleteTaskAt(int index) {
-        return listOfTasks.remove(index - 1);
+    public Task deleteTaskAt(int index) throws WoutException {
+        try {
+            return listOfTasks.remove(index - 1);
+        } catch (IndexOutOfBoundsException e) {
+            throw new WoutException(index + " is not a valid index to be deleted");
+        }
     }
 
     public String listTasks() {
