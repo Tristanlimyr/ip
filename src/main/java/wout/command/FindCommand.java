@@ -1,18 +1,17 @@
 package wout.command;
 
-import wout.task.Task;
 import wout.task.TaskList;
 import wout.ui.Storage;
 import wout.ui.Ui;
-import wout.ui.WoutException;
 
-import java.util.List;
-
+/**
+ * Represents a user request to find tasks in task list that contains certain keywords in their description.
+ */
 public class FindCommand extends Command {
-    private final String description;
+    private final String keyword;
 
-    public FindCommand(String description) {
-        this.description = description;
+    public FindCommand(String keyword) {
+        this.keyword = keyword;
     }
 
     @Override
@@ -20,13 +19,20 @@ public class FindCommand extends Command {
         return false;
     }
 
+    /**
+     * Find tasks in task list.
+     *
+     * @param tasks task list from which tasks are found.
+     * @param ui Ui to display user message containing tasks found.
+     * @param storage Storage will not be used.
+     */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws WoutException {
-        ui.printMessage(ui.findTaskMessage(tasks.findTasks(description)));
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
+        ui.printMessage(ui.findTaskMessage(tasks.findTasks(keyword)));
     }
 
     @Override
     public String toString() {
-        return "Find " + this.description;
+        return "Find " + this.keyword;
     }
 }
