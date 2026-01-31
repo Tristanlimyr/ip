@@ -1,6 +1,12 @@
 package wout.ui;
 
-import wout.command.*;
+import wout.command.Command;
+import wout.command.AddCommand;
+import wout.command.DeleteCommand;
+import wout.command.ExitCommand;
+import wout.command.ListCommand;
+import wout.command.MarkCommand;
+import wout.command.UnmarkCommand;
 import wout.task.Deadline;
 import wout.task.Event;
 import wout.task.Todo;
