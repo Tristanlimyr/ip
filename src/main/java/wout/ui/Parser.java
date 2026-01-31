@@ -1,12 +1,6 @@
 package wout.ui;
 
-import wout.command.Command;
-import wout.command.AddCommand;
-import wout.command.DeleteCommand;
-import wout.command.ExitCommand;
-import wout.command.ListCommand;
-import wout.command.MarkCommand;
-import wout.command.UnmarkCommand;
+import wout.command.*;
 import wout.task.Deadline;
 import wout.task.Event;
 import wout.task.Todo;
@@ -93,6 +87,10 @@ public class Parser {
         }
     }
 
+    private static Command parseFind(String input) {
+        return new FindCommand(input);
+    }
+
     public static Command parse(String fullCommand) throws WoutException {
         String[] commandArr = fullCommand.split("\\s+", 2);
         Keyword keyword = Keyword.fromString(commandArr[0]);
@@ -106,9 +104,10 @@ public class Parser {
             case DEADLINE -> parseDeadline(commandArr[1]);
             case EVENT -> parseEvent(commandArr[1]);
             case DELETE -> parseDelete(commandArr[1]);
+            case FIND -> parseFind(commandArr[1]);
             };
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new WoutException("Please provide an input for " + keyword + "");
+            throw new WoutException("Please provide an input for " + keyword);
         }
     }
 }

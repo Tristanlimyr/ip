@@ -8,7 +8,8 @@ public enum Keyword {
     TODO("todo"),
     DEADLINE("deadline"),
     EVENT("event"),
-    DELETE("delete");
+    DELETE("delete"),
+    FIND("find");
 
     private final String keyword;
 
