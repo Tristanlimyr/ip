@@ -35,7 +35,7 @@ public class Storage {
     }
 
     private Task doAddDeadlineCommand(String input, boolean isDone) throws WoutException {
-        Matcher matcher = Pattern.compile(Ui.DEADLINE_REGEX).matcher(input);
+        Matcher matcher = Pattern.compile(Parser.DEADLINE_REGEX).matcher(input);
         if (!matcher.matches()) {
             throw new WoutException("Please provide a valid input for Deadline tasks\n");
         } else {
@@ -49,7 +49,7 @@ public class Storage {
     }
 
     private Task doAddEventCommand(String input, boolean isDone) throws WoutException {
-        Matcher matcher = Pattern.compile(Ui.EVENT_REGEX).matcher(input);
+        Matcher matcher = Pattern.compile(Parser.EVENT_REGEX).matcher(input);
         if (!matcher.matches()) {
             throw new WoutException("Please provide a valid input for Event tasks\n");
         } else {
@@ -77,17 +77,19 @@ public class Storage {
             Task task;
             while (scanner.hasNextLine()) {
                 String input = scanner.nextLine();
-                String[] inputArr = input.split("\\s+#\\s+");
-                boolean isDone = parseTaskDoneStatus(inputArr[0]);
-                inputArr = inputArr[1].split("\\s+", 2);
-                Keyword keyword = Keyword.fromString(inputArr[0]);
-                task = switch (keyword) {
-                    case TODO -> doAddTodoCommand(inputArr[1], isDone);
-                    case DEADLINE ->  doAddDeadlineCommand(inputArr[1], isDone);
-                    case EVENT -> doAddEventCommand(inputArr[1], isDone);
-                    default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!\n");
-                };
-                tasks.add(task);
+                if (!input.isEmpty()) {
+                    String[] inputArr = input.split("\\s+#\\s+");
+                    boolean isDone = parseTaskDoneStatus(inputArr[0]);
+                    inputArr = inputArr[1].split("\\s+", 2);
+                    Keyword keyword = Keyword.fromString(inputArr[0]);
+                    task = switch (keyword) {
+                        case TODO -> doAddTodoCommand(inputArr[1], isDone);
+                        case DEADLINE -> doAddDeadlineCommand(inputArr[1], isDone);
+                        case EVENT -> doAddEventCommand(inputArr[1], isDone);
+                        default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!\n");
+                    };
+                    tasks.add(task);
+                }
             }
             return tasks;
         } catch (FileNotFoundException e) {
@@ -101,11 +103,15 @@ public class Storage {
      *
      * @param listOfTasks tasks to be written in file
      */
-    public void store(List<Task> listOfTasks) throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath);
-        for (Task task : listOfTasks) {
-            fileWriter.write(task.toEntry() + "\n");
+    public void store(List<Task> listOfTasks) throws WoutException {
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            for (Task task : listOfTasks) {
+                fileWriter.write(task.toEntry() + "\n");
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new WoutException(e.toString());
         }
-        fileWriter.close();
     }
 }
