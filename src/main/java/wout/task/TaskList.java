@@ -5,10 +5,10 @@ import java.util.List;
 
 public class TaskList {
 
-    private final List<Task> listOfTasks;
+    private final List<Task> tasks;
 
     public TaskList(List<Task> tasks) {
-        this.listOfTasks = tasks;
+        this.tasks = tasks;
     }
 
     public TaskList() {
@@ -16,32 +16,32 @@ public class TaskList {
     }
 
     public void storeTask(Task task) {
-        listOfTasks.add(task);
+        tasks.add(task);
     }
 
     public int getNumOfTasks() {
-        return listOfTasks.size();
+        return tasks.size();
     }
 
     public Task markTaskAt(int index) {
-        Task task = listOfTasks.get(index - 1);
+        Task task = tasks.get(index - 1);
         task.markAsDone();
         return task;
     }
 
     public Task unmarkTaskAt(int index) {
-        Task task = listOfTasks.get(index - 1);
+        Task task = tasks.get(index - 1);
         task.unmarkAsDone();
         return task;
     }
 
     public Task deleteTaskAt(int index) {
-        return listOfTasks.remove(index - 1);
+        return tasks.remove(index - 1);
     }
 
     public List<Task> findTasks(String description) {
         List<Task> tasksFound = new ArrayList<>();
-        for (Task task : this.listOfTasks) {
+        for (Task task : tasks) {
             if (task.description.contains(description)) {
                 tasksFound.add(task);
             }
@@ -50,7 +50,7 @@ public class TaskList {
     }
 
     public List<Task> getTasks() {
-        return listOfTasks;
+        return tasks;
     }
 
 }
