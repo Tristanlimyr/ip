@@ -1,11 +1,11 @@
 package wout.ui;
 
-import wout.task.Task;
-import wout.task.TaskList;
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+
+import wout.task.Task;
+import wout.task.TaskList;
 
 /**
  * Class to read input from user and display messages to user.
