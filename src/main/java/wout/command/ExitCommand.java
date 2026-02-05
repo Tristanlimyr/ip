@@ -15,10 +15,14 @@ public class ExitCommand extends Command {
     }
 
     /**
-     * Does nothing.
+     * Displays exit message.
+     *
+     * @return exit message.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        return;
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        String message = ui.getExitMessage();
+        ui.printMessage(message);
+        return message;
     }
 }

@@ -26,16 +26,20 @@ public class DeleteCommand extends Command {
 
     /**
      * Deletes task from task list, displays user message and stores updated task list in file.
+     *
      * @param tasks task list to be deleted from.
      * @param ui Ui to display user message.
      * @param storage Storage to store updated task list in file.
+     * @return message generated from deleting the task.
      * @throws WoutException If there is an issue with writing to file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws WoutException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws WoutException {
         Task task = tasks.deleteTaskAt(this.taskIndex);
         storage.store(tasks.getTasks());
-        ui.printMessage(ui.deleteTaskMessage(task, tasks));
+        String message = ui.deleteTaskMessage(task, tasks);
+        ui.printMessage(message);
+        return message;
     }
 
     @Override

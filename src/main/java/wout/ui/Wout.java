@@ -1,35 +1,40 @@
 package wout.ui;
 
+import javafx.application.Platform;
 import wout.command.Command;
 import wout.task.TaskList;
 
-import java.io.IOException;
-
 public class Wout {
     private static final String FILE_PATH = "./data/wout.txt";
-    private static final Storage storage = new Storage(FILE_PATH);
-    private static final Ui ui = new Ui();
+    private final Storage storage = new Storage(FILE_PATH);
+    private final Ui ui = new Ui();
+    private TaskList tasks;
 
-    public static void main(String[] args) throws IOException {
-        TaskList tasks;
+    public Wout() {
         try {
             tasks = new TaskList(storage.load());
         } catch (WoutException e) {
             ui.printWoutException(e);
             tasks = new TaskList();
         }
-        ui.printGreeting();
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String fullCommand = ui.readCommand();
-                Command command = Parser.parse(fullCommand);
-                command.execute(tasks, ui, storage);
-                isExit = command.isExit();
-            } catch (WoutException e) {
-                ui.printMessage(e.toString());
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        try {
+            Command command = Parser.parse(input);
+            if (command.isExit()) {
+                Platform.exit();
             }
+            return command.execute(tasks, ui, storage);
+        } catch (WoutException e) {
+            return e.toString();
         }
-        ui.printExit();
+    }
+
+    public String getGreeting() {
+        return ui.getGreetingMessage();
     }
 }

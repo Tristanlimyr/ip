@@ -25,6 +25,7 @@ public class Event extends Task {
 
     /**
      * Constructs an event which is not done.
+     *
      * @param description Description of event.
      * @param from Start date and time of event.
      * @param to End date and time of event.

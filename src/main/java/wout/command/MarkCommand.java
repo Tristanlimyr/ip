@@ -26,16 +26,20 @@ public class MarkCommand extends Command {
 
     /**
      * Marks task in tasks list as done, displays user message and stores updated task list in file.
+     *
      * @param tasks task list containing task to be marked.
      * @param ui Ui to display user message.
      * @param storage Storage to store updated task list in file.
+     * @return message generated from marking the task.
      * @throws WoutException If there is an issue with writing to file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws WoutException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws WoutException {
         Task task = tasks.markTaskAt(taskIndex);
         storage.store(tasks.getTasks());
-        ui.printMessage(ui.markTaskMessage(task, tasks));
+        String message = ui.markTaskMessage(task, tasks);
+        ui.printMessage(message);
+        return message;
     }
 
     @Override
