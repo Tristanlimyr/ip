@@ -1,8 +1,8 @@
 package wout.task;
 
-import wout.ui.Ui;
-
 import java.time.LocalDateTime;
+
+import wout.ui.Ui;
 
 /**
  * Represents a task that needs to be done by a certain date and time.

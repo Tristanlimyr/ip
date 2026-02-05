@@ -1,9 +1,9 @@
 package wout.task;
 
-import wout.ui.WoutException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import wout.ui.WoutException;
 
 /**
  * Represents a list of tasks

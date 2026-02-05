@@ -1,8 +1,8 @@
 package wout.task;
 
-import wout.ui.Ui;
-
 import java.time.LocalDateTime;
+
+import wout.ui.Ui;
 
 /**
  * Represents a task that takes place during a period of time.

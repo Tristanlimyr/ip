@@ -1,10 +1,5 @@
 package wout.ui;
 
-import wout.task.Deadline;
-import wout.task.Event;
-import wout.task.Task;
-import wout.task.Todo;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -16,6 +11,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import wout.task.Deadline;
+import wout.task.Event;
+import wout.task.Task;
+import wout.task.Todo;
 
 /**
  * Class to save tasks in the hard disk whenever the task list changes and
