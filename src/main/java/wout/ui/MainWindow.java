@@ -23,7 +23,7 @@ public class MainWindow extends AnchorPane {
     private Wout wout;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/Wout.png"));
+    private Image woutImage = new Image(this.getClass().getResourceAsStream("/images/Wout.png"));
 
     @FXML
     public void initialize() {
@@ -33,6 +33,9 @@ public class MainWindow extends AnchorPane {
     /** Injects the Wout instance */
     public void setDuke(Wout w) {
         wout = w;
+        dialogContainer.getChildren().addAll(
+                DialogBox.getWoutDialog(wout.getGreeting(), woutImage)
+        );
     }
 
     /**
@@ -45,7 +48,7 @@ public class MainWindow extends AnchorPane {
         String response = wout.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getWoutDialog(response, woutImage)
         );
         userInput.clear();
     }

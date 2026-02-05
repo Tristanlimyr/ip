@@ -20,15 +20,18 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Find tasks in task list.
+     * Find tasks in task list, displays user message.
      *
      * @param tasks task list from which tasks are found.
      * @param ui Ui to display user message containing tasks found.
+     * @return message generated from finding the task.
      * @param storage Storage will not be used.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.printMessage(ui.findTaskMessage(tasks.findTasks(keyword)));
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        String message = ui.findTaskMessage(tasks.findTasks(keyword));
+        ui.printMessage(message);
+        return message;
     }
 
     @Override

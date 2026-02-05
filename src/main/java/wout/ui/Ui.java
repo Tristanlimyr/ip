@@ -31,8 +31,12 @@ public class Ui {
         printMessage(GREET);
     }
 
-    public void printExit() {
-        printMessage(EXIT);
+    public String getGreetingMessage() {
+        return GREET;
+    }
+
+    public String getExitMessage() {
+        return EXIT;
     }
 
     public String addTaskMessage(Task task, TaskList taskList) {
