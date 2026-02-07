@@ -34,9 +34,9 @@ public class Storage {
 
     private static boolean parseTaskDoneStatus(String isDone) throws WoutException {
         return switch (isDone) {
-            case "1" -> true;
-            case "0" -> false;
-            default -> throw new WoutException(isDone + " is not a valid status");
+        case "1" -> true;
+        case "0" -> false;
+        default -> throw new WoutException(isDone + " is not a valid status");
         };
     }
 
@@ -50,23 +50,21 @@ public class Storage {
 
     private Task doAddDeadlineCommand(String input, boolean isDone) throws WoutException {
         Matcher matcher = Pattern.compile(Parser.DEADLINE_REGEX).matcher(input);
-        if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for Deadline tasks");
-        } else {
+        if (matcher.matches()) {
             try {
                 LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 return new Deadline(matcher.group(1), by, isDone);
             } catch (DateTimeParseException e) {
                 throw new WoutException(Ui.INVALID_DATE_TIME);
             }
+        } else {
+            throw new WoutException("Please provide a valid input for Deadline tasks");
         }
     }
 
     private Task doAddEventCommand(String input, boolean isDone) throws WoutException {
         Matcher matcher = Pattern.compile(Parser.EVENT_REGEX).matcher(input);
-        if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for Event tasks");
-        } else {
+        if (matcher.matches()) {
             try {
                 LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 LocalDateTime to = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
@@ -74,6 +72,8 @@ public class Storage {
             } catch (DateTimeParseException e) {
                 throw new WoutException(Ui.INVALID_DATE_TIME);
             }
+        } else {
+            throw new WoutException("Please provide a valid input for Event tasks");
         }
     }
 
@@ -84,7 +84,7 @@ public class Storage {
      * @return list of Task read from file.
      * @throws WoutException If file contains invalid entries.
      */
-    public List<Task> load() throws WoutException {
+    public List<Task> readTasksFromFile() throws WoutException {
         File file = new File(filePath);
         try {
             Scanner scanner = new Scanner(file);
@@ -98,10 +98,10 @@ public class Storage {
                     inputArr = inputArr[1].split("\\s+", 2);
                     Keyword keyword = Keyword.fromString(inputArr[0]);
                     task = switch (keyword) {
-                        case TODO -> doAddTodoCommand(inputArr[1], isDone);
-                        case DEADLINE -> doAddDeadlineCommand(inputArr[1], isDone);
-                        case EVENT -> doAddEventCommand(inputArr[1], isDone);
-                        default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!");
+                    case TODO -> doAddTodoCommand(inputArr[1], isDone);
+                    case DEADLINE -> doAddDeadlineCommand(inputArr[1], isDone);
+                    case EVENT -> doAddEventCommand(inputArr[1], isDone);
+                    default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!");
                     };
                     tasks.add(task);
                 }
@@ -119,7 +119,7 @@ public class Storage {
      * @param listOfTasks tasks to be written in file.
      * @throws WoutException If there is an issue with writing to file.
      */
-    public void store(List<Task> listOfTasks) throws WoutException {
+    public void writeTasksToFile(List<Task> listOfTasks) throws WoutException {
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             for (Task task : listOfTasks) {
