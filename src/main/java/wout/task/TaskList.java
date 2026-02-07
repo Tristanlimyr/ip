@@ -75,6 +75,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Return a list of tasks that match description.
+     *
+     * @param description Description to be matched against.
+     * @return list of tasks that matches.
+     */
     public List<Task> findTasks(String description) {
         List<Task> tasksFound = new ArrayList<>();
         for (Task task : tasks) {

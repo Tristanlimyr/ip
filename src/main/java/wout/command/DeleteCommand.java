@@ -36,7 +36,7 @@ public class DeleteCommand extends Command {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws WoutException {
         Task task = tasks.deleteTaskAt(this.taskIndex);
-        storage.store(tasks.getTasks());
+        storage.writeTasksToFile(tasks.getTasks());
         String message = ui.deleteTaskMessage(task, tasks);
         ui.printMessage(message);
         return message;

@@ -59,32 +59,32 @@ public class Parser {
 
     private static Command parseDeadline(String input) throws WoutException {
         Matcher matcher = Pattern.compile(DEADLINE_REGEX).matcher(input);
-        if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for Deadline tasks");
-        } else {
+        if (matcher.matches()) {
             try {
                 assert matcher.groupCount() == 2;
-                LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
-                return new AddCommand(new Deadline(matcher.group(1), by));
+                LocalDateTime byDateTime = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
+                return new AddCommand(new Deadline(matcher.group(1), byDateTime));
             } catch (DateTimeParseException e) {
                 throw new WoutException(Ui.INVALID_DATE_TIME);
             }
+        } else {
+            throw new WoutException("Please provide a valid input for Deadline tasks");
         }
     }
 
     private static Command parseEvent(String input) throws WoutException {
         Matcher matcher = Pattern.compile(EVENT_REGEX).matcher(input);
-        if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for Event tasks");
-        } else {
+        if (matcher.matches()) {
             try {
                 assert matcher.groupCount() == 3;
-                LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
-                LocalDateTime to = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
-                return new AddCommand(new Event(matcher.group(1), from, to));
+                LocalDateTime fromDateTime = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
+                LocalDateTime toDateTime = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
+                return new AddCommand(new Event(matcher.group(1), fromDateTime, toDateTime));
             } catch (DateTimeParseException e) {
                 throw new WoutException(Ui.INVALID_DATE_TIME);
             }
+        } else {
+            throw new WoutException("Please provide a valid input for Event tasks");
         }
     }
 

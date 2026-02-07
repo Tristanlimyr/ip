@@ -50,9 +50,7 @@ public class Storage {
 
     private Task doAddDeadlineCommand(String input, boolean isDone) throws WoutException {
         Matcher matcher = Pattern.compile(Parser.DEADLINE_REGEX).matcher(input);
-        if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for Deadline tasks");
-        } else {
+        if (matcher.matches()) {
             try {
                 assert matcher.groupCount() == 2;
                 LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
@@ -60,14 +58,14 @@ public class Storage {
             } catch (DateTimeParseException e) {
                 throw new WoutException(Ui.INVALID_DATE_TIME);
             }
+        } else {
+            throw new WoutException("Please provide a valid input for Deadline tasks");
         }
     }
 
     private Task doAddEventCommand(String input, boolean isDone) throws WoutException {
         Matcher matcher = Pattern.compile(Parser.EVENT_REGEX).matcher(input);
-        if (!matcher.matches()) {
-            throw new WoutException("Please provide a valid input for Event tasks");
-        } else {
+        if (matcher.matches()) {
             try {
                 assert matcher.groupCount() == 3;
                 LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
@@ -76,6 +74,8 @@ public class Storage {
             } catch (DateTimeParseException e) {
                 throw new WoutException(Ui.INVALID_DATE_TIME);
             }
+        } else {
+            throw new WoutException("Please provide a valid input for Event tasks");
         }
     }
 
@@ -86,7 +86,7 @@ public class Storage {
      * @return list of Task read from file.
      * @throws WoutException If file contains invalid entries.
      */
-    public List<Task> load() throws WoutException {
+    public List<Task> readTasksFromFile() throws WoutException {
         File file = new File(filePath);
         try {
             Scanner scanner = new Scanner(file);
@@ -123,7 +123,7 @@ public class Storage {
      * @param listOfTasks tasks to be written in file.
      * @throws WoutException If there is an issue with writing to file.
      */
-    public void store(List<Task> listOfTasks) throws WoutException {
+    public void writeTasksToFile(List<Task> listOfTasks) throws WoutException {
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             for (Task task : listOfTasks) {
