@@ -12,7 +12,7 @@ public class Wout {
 
     public Wout() {
         try {
-            tasks = new TaskList(storage.load());
+            tasks = new TaskList(storage.readTasksFromFile());
         } catch (WoutException e) {
             ui.printWoutException(e);
             tasks = new TaskList();

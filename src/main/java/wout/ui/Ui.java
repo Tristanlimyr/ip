@@ -91,7 +91,4 @@ public class Ui {
         printMessage(e.toString());
     }
 
-    public String readCommand() {
-        return scanner.nextLine();
-    }
 }
