@@ -39,24 +39,52 @@ public class Ui {
         return EXIT;
     }
 
+    /**
+     * Formats added task into a user message.
+     *
+     * @param task added task.
+     * @param taskList list of tasks to which task is added.
+     * @return user message.
+     */
     public String addTaskMessage(Task task, TaskList taskList) {
         return "Got it. I've added this task:\n"
                 + "  " + task + "\n"
                 + "Now you have " + taskList.getNumOfTasks() + " tasks in the list.";
     }
 
+    /**
+     * Formats marked task into a user message.
+     *
+     * @param task marked task.
+     * @param taskList list of tasks from which task is marked.
+     * @return user message.
+     */
     public String markTaskMessage(Task task, TaskList taskList) {
         return "Nice! I've marked this task as done:\n"
                 + "  " + task + "\n"
                 + "Now you have " + taskList.getNumOfTasks() + " tasks in the list.";
     }
 
+    /**
+     * Formats unmarked task into a user message.
+     *
+     * @param task unmarked task.
+     * @param taskList list of tasks from which task is unmarked.
+     * @return user message.
+     */
     public String unmarkTaskMessage(Task task, TaskList taskList) {
         return "Ok, I've marked this task as not done yet:\n"
                 + "  " + task + "\n"
                 + "Now you have " + taskList.getNumOfTasks() + " tasks in the list.";
     }
 
+    /**
+     * Formats deleted task into a user message.
+     *
+     * @param task deleted task.
+     * @param taskList list of tasks from which task is deleted.
+     * @return user message.
+     */
     public String deleteTaskMessage(Task task, TaskList taskList) {
         return "Noted. I've remove this task:\n"
                 + "  " + task + "\n"
@@ -77,11 +105,23 @@ public class Ui {
         }
     }
 
+    /**
+     * Formats tasks into a user message.
+     *
+     * @param tasks list of tasks to be listed.
+     * @return user message.
+     */
     public String listTaskMessage(List<Task> tasks) {
         return "Here are the tasks in your list:\n"
                 + listTasks(tasks);
     }
 
+    /**
+     * Formats tasks into a user message.
+     *
+     * @param tasks list of tasks to be listed.
+     * @return user message.
+     */
     public String findTaskMessage(List<Task> tasks) {
         return "Here are the matching tasks in your list:\n"
                 + listTasks(tasks);
