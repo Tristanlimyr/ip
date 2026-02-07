@@ -34,9 +34,9 @@ public class Storage {
 
     private static boolean parseTaskDoneStatus(String isDone) throws WoutException {
         return switch (isDone) {
-            case "1" -> true;
-            case "0" -> false;
-            default -> throw new WoutException(isDone + " is not a valid status");
+        case "1" -> true;
+        case "0" -> false;
+        default -> throw new WoutException(isDone + " is not a valid status");
         };
     }
 
@@ -54,6 +54,7 @@ public class Storage {
             throw new WoutException("Please provide a valid input for Deadline tasks");
         } else {
             try {
+                assert matcher.groupCount() == 2;
                 LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 return new Deadline(matcher.group(1), by, isDone);
             } catch (DateTimeParseException e) {
@@ -68,6 +69,7 @@ public class Storage {
             throw new WoutException("Please provide a valid input for Event tasks");
         } else {
             try {
+                assert matcher.groupCount() == 3;
                 LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 LocalDateTime to = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
                 return new Event(matcher.group(1), from, to, isDone);
@@ -94,14 +96,16 @@ public class Storage {
                 String input = scanner.nextLine();
                 if (!input.isEmpty()) {
                     String[] inputArr = input.split("\\s+#\\s+");
+                    assert inputArr.length == 2;
                     boolean isDone = parseTaskDoneStatus(inputArr[0]);
                     inputArr = inputArr[1].split("\\s+", 2);
+                    assert inputArr.length == 2;
                     Keyword keyword = Keyword.fromString(inputArr[0]);
                     task = switch (keyword) {
-                        case TODO -> doAddTodoCommand(inputArr[1], isDone);
-                        case DEADLINE -> doAddDeadlineCommand(inputArr[1], isDone);
-                        case EVENT -> doAddEventCommand(inputArr[1], isDone);
-                        default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!");
+                    case TODO -> doAddTodoCommand(inputArr[1], isDone);
+                    case DEADLINE -> doAddDeadlineCommand(inputArr[1], isDone);
+                    case EVENT -> doAddEventCommand(inputArr[1], isDone);
+                    default -> throw new WoutException("\"" + input + "\" is not a valid entry in your file!");
                     };
                     tasks.add(task);
                 }

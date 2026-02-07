@@ -63,6 +63,7 @@ public class Parser {
             throw new WoutException("Please provide a valid input for Deadline tasks");
         } else {
             try {
+                assert matcher.groupCount() == 2;
                 LocalDateTime by = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 return new AddCommand(new Deadline(matcher.group(1), by));
             } catch (DateTimeParseException e) {
@@ -77,6 +78,7 @@ public class Parser {
             throw new WoutException("Please provide a valid input for Event tasks");
         } else {
             try {
+                assert matcher.groupCount() == 3;
                 LocalDateTime from = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 LocalDateTime to = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
                 return new AddCommand(new Event(matcher.group(1), from, to));
@@ -110,6 +112,7 @@ public class Parser {
      */
     public static Command parse(String fullCommand) throws WoutException {
         String[] commandArr = fullCommand.split("\\s+", 2);
+        assert commandArr.length >= 1;
         Keyword keyword = Keyword.fromString(commandArr[0]);
         try {
             return switch (keyword) {
