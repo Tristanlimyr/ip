@@ -61,6 +61,7 @@ public class Parser {
         Matcher matcher = Pattern.compile(DEADLINE_REGEX).matcher(input);
         if (matcher.matches()) {
             try {
+                assert matcher.groupCount() == 2;
                 LocalDateTime byDateTime = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 return new AddCommand(new Deadline(matcher.group(1), byDateTime));
             } catch (DateTimeParseException e) {
@@ -75,6 +76,7 @@ public class Parser {
         Matcher matcher = Pattern.compile(EVENT_REGEX).matcher(input);
         if (matcher.matches()) {
             try {
+                assert matcher.groupCount() == 3;
                 LocalDateTime fromDateTime = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
                 LocalDateTime toDateTime = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
                 return new AddCommand(new Event(matcher.group(1), fromDateTime, toDateTime));
@@ -110,6 +112,7 @@ public class Parser {
      */
     public static Command parse(String fullCommand) throws WoutException {
         String[] commandArr = fullCommand.split("\\s+", 2);
+        assert commandArr.length >= 1;
         Keyword keyword = Keyword.fromString(commandArr[0]);
         try {
             return switch (keyword) {
