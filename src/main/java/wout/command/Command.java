@@ -11,5 +11,5 @@ import wout.ui.WoutException;
  */
 public abstract class Command {
     public abstract boolean isExit();
-    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws WoutException;
+    public abstract String execute(TaskList taskList, Ui ui, Storage storage) throws WoutException;
 }

@@ -31,6 +31,11 @@ public class Deadline extends Task {
     }
 
     @Override
+    public Task copy() {
+        return new Deadline(super.getDescription(), byDateTime, super.getIsDone());
+    }
+
+    @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + byDateTime.format(Ui.DATE_TIME_DISPLAY) + ")";
     }

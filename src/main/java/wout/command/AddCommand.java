@@ -27,17 +27,17 @@ public class AddCommand extends Command {
     /**
      * Adds task to task list, displays user message and stores updated task list in file.
      *
-     * @param tasks task list to be added to.
+     * @param taskList task list to be added to.
      * @param ui Ui to display user message.
      * @param storage Storage to store updated task list in file.
      * @return message generated from adding the task.
      * @throws WoutException If there is an issue with writing to file.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws WoutException {
-        tasks.storeTask(task);
-        storage.writeTasksToFile(tasks.getTasks());
-        String message = ui.addTaskMessage(task, tasks);
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws WoutException {
+        taskList.addTask(task);
+        storage.writeTasksToFile(taskList);
+        String message = ui.addTaskMessage(task, taskList);
         ui.printMessage(message);
         return message;
     }

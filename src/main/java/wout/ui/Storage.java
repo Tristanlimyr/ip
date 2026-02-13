@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import wout.task.Deadline;
 import wout.task.Event;
 import wout.task.Task;
+import wout.task.TaskList;
 import wout.task.Todo;
 
 /**
@@ -120,13 +121,14 @@ public class Storage {
      * Writes tasks in file by overwriting the file.
      * If file does not exist, create file.
      *
-     * @param listOfTasks tasks to be written in file.
+     * @param taskList tasks to be written in file.
      * @throws WoutException If there is an issue with writing to file.
      */
-    public void writeTasksToFile(List<Task> listOfTasks) throws WoutException {
+    public void writeTasksToFile(TaskList taskList) throws WoutException {
         try {
             FileWriter fileWriter = new FileWriter(filePath);
-            for (Task task : listOfTasks) {
+            List<Task> tasks = taskList.getTasks();
+            for (Task task : tasks) {
                 fileWriter.write(task.toEntry() + "\n");
             }
             fileWriter.close();

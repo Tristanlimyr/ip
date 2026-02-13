@@ -2,7 +2,6 @@ package wout.ui;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Scanner;
 
 import wout.task.Task;
 import wout.task.TaskList;
@@ -18,17 +17,16 @@ public class Ui {
     public static final String INVALID_DATE_TIME = "Please provide date and time in \"yyyy-mm-dd HH:mm\" format!";
     public static final DateTimeFormatter DATE_TIME_DISPLAY = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
     public static final DateTimeFormatter DATE_TIME_ENTRY = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Prints message in a formatted manner.
+     * @param message message to be printed.
+     */
     public void printMessage(String message) {
         System.out.println("________________________________\n"
                 + message + "\n"
                 + "________________________________\n"
         );
-    }
-
-    public void printGreeting() {
-        printMessage(GREET);
     }
 
     public String getGreetingMessage() {

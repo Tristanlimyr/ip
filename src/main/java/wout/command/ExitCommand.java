@@ -20,7 +20,7 @@ public class ExitCommand extends Command {
      * @return exit message.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList taskList, Ui ui, Storage storage) {
         String message = ui.getExitMessage();
         ui.printMessage(message);
         return message;

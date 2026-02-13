@@ -1,6 +1,8 @@
 package wout.task;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 import wout.ui.WoutException;
@@ -9,8 +11,8 @@ import wout.ui.WoutException;
  * Represents a list of tasks
  */
 public class TaskList {
-
-    private final List<Task> tasks;
+    private Deque<List<Task>> taskLists = new ArrayDeque<>();
+    private List<Task> tasks;
 
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
@@ -20,12 +22,25 @@ public class TaskList {
         this(new ArrayList<Task>());
     }
 
-    public void storeTask(Task task) {
-        tasks.add(task);
+    private List<Task> copy(List<Task> tasks) {
+        List<Task> copiedTasks = new ArrayList<>();
+        for (Task t : tasks) {
+            copiedTasks.add(t.copy());
+        }
+        return copiedTasks;
     }
 
-    public int getNumOfTasks() {
-        return tasks.size();
+    private void commit() {
+        taskLists.push(copy(tasks));
+    }
+
+    /**
+     * Adds task to task list.
+     * @param task task to be added.
+     */
+    public void addTask(Task task) {
+        commit();
+        tasks.add(task);
     }
 
     /**
@@ -36,6 +51,7 @@ public class TaskList {
      * @throws WoutException If not a valid index.
      */
     public Task markTaskAt(int index) throws WoutException {
+        commit();
         try {
             Task task = tasks.get(index - 1);
             task.markAsDone();
@@ -53,6 +69,7 @@ public class TaskList {
      * @throws WoutException If not a valid index.
      */
     public Task unmarkTaskAt(int index) throws WoutException {
+        commit();
         try {
             Task task = tasks.get(index - 1);
             task.unmarkAsDone();
@@ -68,6 +85,7 @@ public class TaskList {
      * @throws WoutException If not a valid index.
      */
     public Task deleteTaskAt(int index) throws WoutException {
+        commit();
         try {
             return tasks.remove(index - 1);
         } catch (IndexOutOfBoundsException e) {
@@ -91,8 +109,22 @@ public class TaskList {
         return tasksFound;
     }
 
+    /**
+     * Undo last command that modified task list.
+     * If no last command that modified task list, nothing is done.
+     */
+    public void undo() {
+        if (!taskLists.isEmpty()) {
+            tasks = taskLists.pop();
+        }
+    }
+
     public List<Task> getTasks() {
         return tasks;
+    }
+
+    public int getNumOfTasks() {
+        return tasks.size();
     }
 
 }

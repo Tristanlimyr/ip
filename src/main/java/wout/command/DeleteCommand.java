@@ -6,6 +6,7 @@ import wout.ui.Storage;
 import wout.ui.Ui;
 import wout.ui.WoutException;
 
+
 /**
  * Represents a user request to delete a task from task list.
  */
@@ -27,17 +28,17 @@ public class DeleteCommand extends Command {
     /**
      * Deletes task from task list, displays user message and stores updated task list in file.
      *
-     * @param tasks task list to be deleted from.
+     * @param taskList task list to be deleted from.
      * @param ui Ui to display user message.
      * @param storage Storage to store updated task list in file.
      * @return message generated from deleting the task.
      * @throws WoutException If there is an issue with writing to file.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws WoutException {
-        Task task = tasks.deleteTaskAt(this.taskIndex);
-        storage.writeTasksToFile(tasks.getTasks());
-        String message = ui.deleteTaskMessage(task, tasks);
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws WoutException {
+        Task task = taskList.deleteTaskAt(taskIndex);
+        storage.writeTasksToFile(taskList);
+        String message = ui.deleteTaskMessage(task, taskList);
         ui.printMessage(message);
         return message;
     }
