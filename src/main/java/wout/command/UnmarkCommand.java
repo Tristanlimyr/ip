@@ -27,17 +27,17 @@ public class UnmarkCommand extends Command {
     /**
      * Marks task in tasks list as not done, displays user message and stores updated task list in file.
      *
-     * @param tasks task list containing task to be marked.
+     * @param taskList task list containing task to be marked.
      * @param ui Ui to display user message.
      * @param storage Storage to store updated task list in file.
      * @return message generated from unmarking the task.
      * @throws WoutException If there is an issue with writing to file.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws WoutException {
-        Task task = tasks.unmarkTaskAt(taskIndex);
-        storage.writeTasksToFile(tasks.getTasks());
-        String message = ui.unmarkTaskMessage(task, tasks);
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws WoutException {
+        Task task = taskList.unmarkTaskAt(taskIndex);
+        storage.writeTasksToFile(taskList);
+        String message = ui.unmarkTaskMessage(task, taskList);
         ui.printMessage(message);
         return message;
     }

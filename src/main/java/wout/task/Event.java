@@ -35,6 +35,11 @@ public class Event extends Task {
     }
 
     @Override
+    public Task copy() {
+        return new Event(super.getDescription(), fromDateTime, toDateTime, super.getIsDone());
+    }
+
+    @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + fromDateTime.format(Ui.DATE_TIME_DISPLAY)
                 + " to: " + toDateTime.format(Ui.DATE_TIME_DISPLAY) + ")";

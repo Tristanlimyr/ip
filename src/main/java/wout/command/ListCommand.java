@@ -17,14 +17,14 @@ public class ListCommand extends Command {
     /**
      * Lists tasks in task list, displays user message.
      *
-     * @param tasks task list to be listed.
+     * @param taskList task list to be listed.
      * @param ui Ui to display user message containing listed tasks.
      * @return message generated from listing tasks.
      * @param storage Storage will not be used.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
-        String message = ui.listTaskMessage(tasks.getTasks());
+    public String execute(TaskList taskList, Ui ui, Storage storage) {
+        String message = ui.listTaskMessage(taskList.getTasks());
         ui.printMessage(message);
         return message;
     }

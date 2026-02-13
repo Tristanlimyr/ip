@@ -12,6 +12,7 @@ import wout.command.ExitCommand;
 import wout.command.FindCommand;
 import wout.command.ListCommand;
 import wout.command.MarkCommand;
+import wout.command.UndoCommand;
 import wout.command.UnmarkCommand;
 import wout.task.Deadline;
 import wout.task.Event;
@@ -125,6 +126,7 @@ public class Parser {
             case EVENT -> parseEvent(commandArr[1]);
             case DELETE -> parseDelete(commandArr[1]);
             case FIND -> parseFind(commandArr[1]);
+            case UNDO -> new UndoCommand();
             };
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new WoutException("Please provide an input for " + keyword);

@@ -3,7 +3,7 @@ package wout.task;
 /**
  * Represents a task created by user.
  */
-public class Task {
+public abstract class Task {
     private final String description;
     private boolean isDone;
 
@@ -35,6 +35,12 @@ public class Task {
     public String getDescription() {
         return description;
     }
+
+    public boolean getIsDone() {
+        return isDone;
+    }
+
+    public abstract Task copy();
 
     @Override
     public String toString() {
