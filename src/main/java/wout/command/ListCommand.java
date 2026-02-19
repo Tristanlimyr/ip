@@ -28,4 +28,8 @@ public class ListCommand extends Command {
         ui.printMessage(message);
         return message;
     }
+    @Override
+    public String toString() {
+        return "List";
+    }
 }

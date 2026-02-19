@@ -25,4 +25,8 @@ public class ExitCommand extends Command {
         ui.printMessage(message);
         return message;
     }
+    @Override
+    public String toString() {
+        return "Exit";
+    }
 }

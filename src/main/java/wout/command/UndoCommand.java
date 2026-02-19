@@ -36,4 +36,8 @@ public class UndoCommand extends Command {
         ui.printMessage(message);
         return message;
     }
+    @Override
+    public String toString() {
+        return "Undo last command";
+    }
 }
