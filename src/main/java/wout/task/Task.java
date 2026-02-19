@@ -40,6 +40,9 @@ public abstract class Task {
         return isDone;
     }
 
+    /**
+     * Returns a deep copy of the task.
+     */
     public abstract Task copy();
 
     @Override

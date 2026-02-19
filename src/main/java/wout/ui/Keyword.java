@@ -22,6 +22,8 @@ public enum Keyword {
     }
 
     /**
+     * Returns the keyword corresponding to the input string.
+     *
      * @param keyword String corresponding to a keyword.
      * @return keyword representing the input string.
      * @throws WoutException If the keyword given is not a valid one.

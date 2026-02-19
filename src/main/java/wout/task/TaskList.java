@@ -8,7 +8,7 @@ import java.util.List;
 import wout.ui.WoutException;
 
 /**
- * Represents a list of tasks
+ * Represents a list of tasks.
  */
 public class TaskList {
     private Deque<List<Task>> taskLists = new ArrayDeque<>();
@@ -94,7 +94,7 @@ public class TaskList {
     }
 
     /**
-     * Return a list of tasks that match description.
+     * Returns a list of tasks that match description.
      *
      * @param description Description to be matched against.
      * @return list of tasks that matches.
@@ -110,8 +110,8 @@ public class TaskList {
     }
 
     /**
-     * Undo last command that modified task list.
-     * If no last command that modified task list, nothing is done.
+     * Undoes latest modification made to the task list.
+     * If no modifications made previously, nothing is done.
      */
     public void undo() {
         if (!taskLists.isEmpty()) {

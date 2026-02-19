@@ -14,8 +14,8 @@ public class Wout {
     private TaskList tasks;
 
     /**
-     * Load tasks from file. If file does not exist or there are invalid entries,
-     * the task list will be empty.
+     * Loads tasks from file.
+     * If file does not exist or there are invalid entries, the task list will be empty.
      */
     public Wout() {
         try {
@@ -41,7 +41,10 @@ public class Wout {
         }
     }
 
-    public String getGreeting() {
+    /**
+     * Generates a greeting message when user starts a chat with Wout.
+     */
+    public String getGreetingMessage() {
         return ui.getGreetingMessage();
     }
 }

@@ -20,6 +20,7 @@ public class Ui {
 
     /**
      * Prints message in a formatted manner.
+     *
      * @param message message to be printed.
      */
     public void printMessage(String message) {

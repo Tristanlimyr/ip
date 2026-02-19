@@ -81,8 +81,8 @@ public class Storage {
     }
 
     /**
-     * Read tasks from file and return tasks read.
-     * If file does not exist, return empty list.
+     * Reads tasks from file and return tasks read.
+     * If file does not exist, empty list is returned.
      *
      * @return list of Task read from file.
      * @throws WoutException If file contains invalid entries.

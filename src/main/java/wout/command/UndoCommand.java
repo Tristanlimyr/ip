@@ -18,6 +18,15 @@ public class UndoCommand extends Command {
         return false;
     }
 
+    /**
+     * Undoes the last command that modifies the task list, displays user message and stores updated task list in file.
+     *
+     * @param taskList task list to be modified.
+     * @param ui Ui to display user message.
+     * @param storage Storage to store updated task list in file.
+     * @return message generated from undoing the last command.
+     * @throws WoutException If there is an issue with writing to file.
+     */
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) throws WoutException {
         taskList.undo();

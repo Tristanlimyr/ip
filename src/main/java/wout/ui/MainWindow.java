@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 /**
  * Controller for the main GUI.
  */
@@ -34,7 +35,7 @@ public class MainWindow extends AnchorPane {
     public void setDuke(Wout w) {
         wout = w;
         dialogContainer.getChildren().addAll(
-                DialogBox.getWoutDialog(wout.getGreeting(), woutImage)
+                DialogBox.getWoutDialog(wout.getGreetingMessage(), woutImage)
         );
     }
 
