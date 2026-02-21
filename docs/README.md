@@ -57,7 +57,7 @@ Got it. I've added this task:
 Now you have 2 tasks in the list.
 ```
 
-### Adding events
+## Adding events
 Add an event to keep track of activities that occur within a specific date and time.
 ### Command format
 ```
@@ -80,10 +80,12 @@ Now you have 3 tasks in the list.
 ## Listing tasks
 List all tasks to view your current todos, deadlines and events.
 ### Command format
-```list
+```
+list
 ```
 ### Example usage
-```list
+```
+list
 ```
 ### Expected outcome
 Wout displays a numbered list of all tasks, including their type (todo, deadline, event) and relevant details.
@@ -97,10 +99,12 @@ Here are the tasks in your list:
 ## Deleting tasks
 Delete a task to remove it from your list when it's no longer needed.
 ### Command format
-```delete TASK_NUMBER
+```
+delete TASK_NUMBER
 ```
 ### Example usage
-```delete 2
+```
+delete 2
 ```
 ### Expected outcome
 Wout confirms that the task has been deleted successfully and displays the updated number of tasks.
@@ -157,7 +161,8 @@ find concert
 ```
 ### Expected outcome
 Wout displays a list of tasks that match the keyword, including their type and relevant details.
-```Here are the matching tasks in your list:
+```
+Here are the matching tasks in your list:
 1.[E][] concert (from: Feb 22 2026, 8:00 pm to: Feb 22 2026, 11:00 pm)
 ```
 
