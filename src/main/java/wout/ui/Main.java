@@ -12,8 +12,8 @@ import javafx.stage.Stage;
  * A GUI for Wout using FXML.
  */
 public class Main extends Application {
-
-    private Wout wout = new Wout();
+    private static final String APP_NAME = "Wout";
+    private final Wout wout = new Wout();
 
     @Override
     public void start(Stage stage) {
@@ -21,6 +21,7 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+            stage.setTitle(APP_NAME);
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setDuke(wout); // inject the Wout instance
             stage.show();
