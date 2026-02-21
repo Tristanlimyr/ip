@@ -8,7 +8,7 @@
 
 <!-- Used GitHub Copilot to allow resizing of the window and add horizontal scroll bar -->
 
-<AnchorPane prefHeight="600.0" prefWidth="410.0"
+<AnchorPane prefHeight="600.0" prefWidth="420.0"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="wout.ui.MainWindow">
