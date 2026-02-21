@@ -127,7 +127,7 @@ mark 1
 Wout confirms that the task has been marked as done successfully and displays the updated number of tasks.
 ```
 Nice! I've marked this task as done:
-  [T][x] Buy groceries
+  [T][X] Buy groceries
 Now you have 2 tasks in the list.
 ```
 
@@ -164,6 +164,24 @@ Wout displays a list of tasks that match the keyword, including their type and r
 ```
 Here are the matching tasks in your list:
 1.[E][] concert (from: Feb 22 2026, 8:00 pm to: Feb 22 2026, 11:00 pm)
+```
+
+## Undoing command
+Undo the last command that modified the task list (not including the `undo` command itself). 
+### Command format
+```
+undo
+```
+### Example usage
+```
+undo
+```
+### Expected outcome
+Wout confirms that the last command has been undone successfully and displays the updated task list.
+```
+Here are the tasks in your list:
+1.[T][X] Buy groceries
+2.[E][] concert (from: Feb 22 2026, 8:00 pm to: Feb 22 2026, 11:00 pm)
 ```
 
 ## Exiting Wout
