@@ -1,6 +1,8 @@
 package wout.ui;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.util.Duration;
 import wout.command.Command;
 import wout.task.TaskList;
 
@@ -33,7 +35,9 @@ public class Wout {
         try {
             Command command = Parser.parse(input);
             if (command.isExit()) {
-                Platform.exit();
+                PauseTransition delay = new PauseTransition(Duration.seconds(1));
+                delay.setOnFinished(e -> Platform.exit());
+                delay.play();
             }
             return command.execute(tasks, ui, storage);
         } catch (WoutException e) {

@@ -34,6 +34,7 @@ public class MainWindow extends AnchorPane {
     /** Injects the Wout instance */
     public void setDuke(Wout w) {
         wout = w;
+        dialogContainer.prefWidthProperty().bind(scrollPane.widthProperty());
         dialogContainer.getChildren().addAll(
                 DialogBox.getWoutDialog(wout.getGreetingMessage(), woutImage)
         );
