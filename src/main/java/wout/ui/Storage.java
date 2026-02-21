@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -116,6 +119,13 @@ public class Storage {
             return new ArrayList<>();
         }
     }
+    private void createFileIfNotExist() throws IOException {
+        Path path = Paths.get(filePath);
+        Files.createDirectories(path.getParent());
+        if (Files.notExists(path)) {
+            Files.createFile(path);
+        }
+    }
 
     /**
      * Writes tasks in file by overwriting the file.
@@ -126,6 +136,7 @@ public class Storage {
      */
     public void writeTasksToFile(TaskList taskList) throws WoutException {
         try {
+            createFileIfNotExist();
             FileWriter fileWriter = new FileWriter(filePath);
             List<Task> tasks = taskList.getTasks();
             for (Task task : tasks) {
