@@ -85,7 +85,7 @@ public class Ui {
      * @return user message.
      */
     public String deleteTaskMessage(Task task, TaskList taskList) {
-        return "Noted. I've remove this task:\n"
+        return "Noted. I've removed this task:\n"
                 + "  " + task + "\n"
                 + "Now you have " + taskList.getNumOfTasks() + " tasks in the list.";
     }
