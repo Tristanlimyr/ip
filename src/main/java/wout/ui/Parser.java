@@ -100,8 +100,12 @@ public class Parser {
         }
     }
 
-    private static Command parseFind(String input) {
-        return new FindCommand(input);
+    private static Command parseFind(String input) throws WoutException {
+        if (input.isEmpty()) {
+            throw new WoutException("Please provide a description to find tasks");
+        } else {
+            return new FindCommand(input);
+        }
     }
 
     /**
