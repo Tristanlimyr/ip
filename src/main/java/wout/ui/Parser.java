@@ -60,32 +60,35 @@ public class Parser {
 
     private static Command parseDeadline(String input) throws WoutException {
         Matcher matcher = Pattern.compile(DEADLINE_REGEX).matcher(input);
-        if (matcher.matches()) {
-            try {
-                assert matcher.groupCount() == 2;
-                LocalDateTime byDateTime = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
-                return new AddCommand(new Deadline(matcher.group(1), byDateTime));
-            } catch (DateTimeParseException e) {
-                throw new WoutException(Ui.INVALID_DATE_TIME);
-            }
-        } else {
+        if (!matcher.matches()) {
             throw new WoutException("Please provide a valid input for Deadline tasks");
+        }
+        try {
+            assert matcher.groupCount() == 2;
+            String description = matcher.group(1);
+            LocalDateTime byDateTime = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
+            return new AddCommand(new Deadline(description, byDateTime));
+        } catch (DateTimeParseException e) {
+            throw new WoutException(Ui.INVALID_DATE_TIME);
         }
     }
 
     private static Command parseEvent(String input) throws WoutException {
         Matcher matcher = Pattern.compile(EVENT_REGEX).matcher(input);
-        if (matcher.matches()) {
-            try {
-                assert matcher.groupCount() == 3;
-                LocalDateTime fromDateTime = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
-                LocalDateTime toDateTime = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
-                return new AddCommand(new Event(matcher.group(1), fromDateTime, toDateTime));
-            } catch (DateTimeParseException e) {
-                throw new WoutException(Ui.INVALID_DATE_TIME);
-            }
-        } else {
+        if (!matcher.matches()) {
             throw new WoutException("Please provide a valid input for Event tasks");
+        }
+        try {
+            assert matcher.groupCount() == 3;
+            String description = matcher.group(1);
+            LocalDateTime fromDateTime = LocalDateTime.parse(matcher.group(2), Ui.DATE_TIME_ENTRY);
+            LocalDateTime toDateTime = LocalDateTime.parse(matcher.group(3), Ui.DATE_TIME_ENTRY);
+            if (toDateTime.isBefore(fromDateTime)) {
+                throw new WoutException("End date and time cannot be before start date and time");
+            }
+            return new AddCommand(new Event(description, fromDateTime, toDateTime));
+        } catch (DateTimeParseException e) {
+            throw new WoutException(Ui.INVALID_DATE_TIME);
         }
     }
 
