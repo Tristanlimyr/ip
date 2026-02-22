@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.Locale;
 
 import wout.ui.WoutException;
 
@@ -102,7 +103,9 @@ public class TaskList {
     public List<Task> findTasks(String description) {
         List<Task> tasksFound = new ArrayList<>();
         for (Task task : tasks) {
-            if (task.getDescription().contains(description)) {
+            String taskDescriptionLowerCase = task.getDescription().toLowerCase(Locale.ROOT);
+            String descriptionLowerCase = description.toLowerCase(Locale.ROOT);
+            if (taskDescriptionLowerCase.contains(descriptionLowerCase)) {
                 tasksFound.add(task);
             }
         }
